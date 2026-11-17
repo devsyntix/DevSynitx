@@ -23,16 +23,15 @@ export const siteConfig = {
   url: "https://devsyntix.com",
 
   contact: {
-    email: "hello@devsyntix.com",
-    phone: "+1 (555) 123-4567",
-    location: "San Francisco, CA",
+    email: "Devsyntix@gmail.com",
+    phone: "+91 70665 44055",
   },
 
   social: {
-    instagram: "#",
-    twitter: "#",
-    threads: "#",
-    linkedin: "#",
+    instagram: "https://www.instagram.com/devsyntix_/",
+    twitter: "https://x.com/DevSyntix",
+    threads: "https://www.threads.com/@devsyntix_?hl=en",
+    linkedin: "",
   },
 
   navLinks: [

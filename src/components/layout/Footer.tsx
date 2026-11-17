@@ -33,23 +33,27 @@ export default function Footer() {
     {
       name: "Instagram",
       icon: InstagramIcon,
-      href: siteConfig.social.instagram || "#",
+      href: siteConfig.social.instagram,
     },
     {
       name: "X (Twitter)",
       icon: XTwitterIcon,
-      href: siteConfig.social.twitter || "#",
+      href: siteConfig.social.twitter,
     },
     {
       name: "Threads",
       icon: ThreadsIcon,
-      href: siteConfig.social.threads || "#",
+      href: siteConfig.social.threads,
     },
-    {
-      name: "LinkedIn",
-      icon: LinkedInIcon,
-      href: siteConfig.social.linkedin || "#",
-    },
+    ...(siteConfig.social.linkedin
+      ? [
+          {
+            name: "LinkedIn",
+            icon: LinkedInIcon,
+            href: siteConfig.social.linkedin,
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -159,10 +163,6 @@ export default function Footer() {
                 >
                   {siteConfig.contact.phone}
                 </a>
-              </div>
-              <div>
-                <span className="text-xs text-white/40 block">Location</span>
-                <span className="text-white/80">{siteConfig.contact.location}</span>
               </div>
             </div>
           </div>

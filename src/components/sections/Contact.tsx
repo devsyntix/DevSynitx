@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, type FormEvent, type ChangeEvent } from "react";
-import { Mail, Phone, MapPin, Send, CheckCircle2, Sparkles } from "lucide-react";
+import { Mail, Phone, Send, CheckCircle2, Sparkles } from "lucide-react";
 import confetti from "canvas-confetti";
 import {
   InstagramIcon,
@@ -75,23 +75,27 @@ export default function Contact() {
     {
       name: "Instagram",
       icon: InstagramIcon,
-      href: siteConfig.social.instagram || "#",
+      href: siteConfig.social.instagram,
     },
     {
       name: "X (Twitter)",
       icon: XTwitterIcon,
-      href: siteConfig.social.twitter || "#",
+      href: siteConfig.social.twitter,
     },
     {
       name: "Threads",
       icon: ThreadsIcon,
-      href: siteConfig.social.threads || "#",
+      href: siteConfig.social.threads,
     },
-    {
-      name: "LinkedIn",
-      icon: LinkedInIcon,
-      href: siteConfig.social.linkedin || "#",
-    },
+    ...(siteConfig.social.linkedin
+      ? [
+          {
+            name: "LinkedIn",
+            icon: LinkedInIcon,
+            href: siteConfig.social.linkedin,
+          },
+        ]
+      : []),
   ];
 
   const inputClasses =
@@ -337,27 +341,10 @@ export default function Contact() {
                     {siteConfig.contact.phone}
                   </p>
                   <p className="text-xs text-[#86868b] mt-0.5">
-                    Mon - Fri &bull; 9:00 AM - 6:00 PM EST
+                    Mon - Sat &bull; Available on Call & WhatsApp
                   </p>
                 </div>
               </a>
-
-              <div className="ios-glass-card group flex items-start gap-4 p-6 rounded-[28px]">
-                <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-white/[0.08] border border-white/15 flex items-center justify-center text-[#af52de] group-hover:scale-105 transition-transform">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="text-xs font-semibold tracking-wider uppercase text-[#86868b] block">
-                    Headquarters
-                  </span>
-                  <p className="text-base font-semibold tracking-tight text-white group-hover:text-[#af52de] transition-colors mt-0.5">
-                    {siteConfig.contact.location}
-                  </p>
-                  <p className="text-xs text-[#86868b] mt-0.5">
-                    Global digital engineering network
-                  </p>
-                </div>
-              </div>
             </div>
 
             {/* Social Channels Widget */}
@@ -365,7 +352,7 @@ export default function Contact() {
               <span className="text-xs font-semibold uppercase tracking-wider text-[#86868b] block mb-4">
                 Official Channels
               </span>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className={`grid gap-3 ${socialList.length === 3 ? "grid-cols-3" : "grid-cols-2 sm:grid-cols-4"}`}>
                 {socialList.map((social) => {
                   const Icon = social.icon;
                   return (
