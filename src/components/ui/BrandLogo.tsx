@@ -13,10 +13,10 @@ export default function BrandLogo({
   showWordmark = true,
 }: BrandLogoProps) {
   const iconDimensions = {
-    sm: { width: 34, height: 34, textSize: "text-[16px]" },
-    md: { width: 42, height: 42, textSize: "text-[19px]" },
-    lg: { width: 50, height: 50, textSize: "text-[23px]" },
-    xl: { width: 64, height: 64, textSize: "text-[28px]" },
+    sm: { width: 34, height: 34, wordmarkHeight: 18 },
+    md: { width: 42, height: 42, wordmarkHeight: 22 },
+    lg: { width: 50, height: 50, wordmarkHeight: 26 },
+    xl: { width: 64, height: 64, wordmarkHeight: 32 },
   }[size];
 
   return (
@@ -39,21 +39,18 @@ export default function BrandLogo({
         />
       </div>
 
-      {/* Apple SF Pro Wordmark */}
+      {/* Official DEVSYNTIX Wordmark with Cyan Brand Accent */}
       {showWordmark && (
-        <div className="flex items-center tracking-[-0.035em] font-bold">
-          <span className={`text-white ${iconDimensions.textSize}`}>
-            Dev
-          </span>
-          <span
-            className={`bg-gradient-to-r from-[#29d8ff] via-[#af52de] to-[#0071e3] bg-clip-text text-transparent ${iconDimensions.textSize}`}
-          >
-            Syntix
-          </span>
-          {/* Apple spatial terminal accent */}
-          <span className="ml-1 text-[11px] font-mono font-medium text-[#29d8ff]/80">
-            &lt;/&gt;
-          </span>
+        <div className="flex items-center">
+          <Image
+            src="/brand/wordmark-white.png"
+            alt="DevSyntix"
+            width={334}
+            height={52}
+            style={{ height: `${iconDimensions.wordmarkHeight}px`, width: "auto" }}
+            className="object-contain filter drop-shadow-[0_2px_8px_rgba(41,216,255,0.3)] transition-transform duration-200 group-hover:brightness-110"
+            priority
+          />
         </div>
       )}
     </div>
