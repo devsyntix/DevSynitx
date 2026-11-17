@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 
 interface BrandLogoProps {
   className?: string;
@@ -13,83 +12,86 @@ export default function BrandLogo({
   showWordmark = true,
 }: BrandLogoProps) {
   const iconDimensions = {
-    sm: { width: 32, height: 32, textSize: "text-lg" },
-    md: { width: 40, height: 40, textSize: "text-xl" },
-    lg: { width: 52, height: 52, textSize: "text-2xl" },
-    xl: { width: 68, height: 68, textSize: "text-3xl" },
+    sm: { width: 34, height: 34, textSize: "text-[16px]" },
+    md: { width: 42, height: 42, textSize: "text-[19px]" },
+    lg: { width: 50, height: 50, textSize: "text-[23px]" },
+    xl: { width: 64, height: 64, textSize: "text-[28px]" },
   }[size];
 
   return (
-    <div className={`inline-flex items-center gap-3 ${className}`}>
-      {/* 3D Geometric Ribbon Logo Mark */}
+    <div className={`inline-flex items-center gap-2.5 ${className}`}>
+      {/* iOS 27 Squircle 3D Emblem Container */}
       <div
-        className="relative flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-900/30 via-slate-900/50 to-cyan-950/30 p-1.5 border border-cyan-500/20 shadow-[0_0_20px_-3px_rgba(6,182,212,0.3)] transition-transform duration-300 hover:scale-105"
+        className="relative flex items-center justify-center rounded-[14px] bg-white/[0.06] backdrop-blur-2xl p-1.5 border border-white/20 shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.4),0_8px_20px_rgba(0,0,0,0.6)] transition-all duration-300 group-hover:scale-105"
         style={{ width: iconDimensions.width, height: iconDimensions.height }}
       >
+        {/* Specular corner glint */}
+        <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+
         <svg
           viewBox="0 0 100 100"
-          className="w-full h-full drop-shadow-[0_4px_10px_rgba(0,180,255,0.4)]"
+          className="w-full h-full drop-shadow-[0_2px_8px_rgba(41,216,255,0.5)]"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <defs>
-            <linearGradient id="blueRibbon" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#0047FF" />
-              <stop offset="50%" stopColor="#0066FF" />
-              <stop offset="100%" stopColor="#002999" />
+            <linearGradient id="appleBlueRibbon" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#0071E3" />
+              <stop offset="60%" stopColor="#29D8FF" />
+              <stop offset="100%" stopColor="#5856D6" />
             </linearGradient>
-            <linearGradient id="cyanRibbon" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#00F0FF" />
-              <stop offset="100%" stopColor="#00A3FF" />
+            <linearGradient id="appleCyanRibbon" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#29D8FF" />
+              <stop offset="100%" stopColor="#0071E3" />
             </linearGradient>
-            <linearGradient id="darkFold" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#00359E" />
-              <stop offset="100%" stopColor="#001859" />
+            <linearGradient id="appleDarkFold" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#0A2540" />
+              <stop offset="100%" stopColor="#00122A" />
             </linearGradient>
           </defs>
 
           {/* Top back fold */}
           <path
             d="M20 34 L72 14 L80 32 L28 52 Z"
-            fill="url(#blueRibbon)"
+            fill="url(#appleBlueRibbon)"
           />
           {/* Top front upright panel */}
           <path
             d="M48 24 L78 35 L78 62 L48 51 Z"
-            fill="url(#cyanRibbon)"
+            fill="url(#appleCyanRibbon)"
             opacity="0.95"
           />
           {/* Left upright front panel */}
           <path
             d="M18 35 L48 46 L48 73 L18 62 Z"
-            fill="url(#cyanRibbon)"
+            fill="url(#appleCyanRibbon)"
           />
           {/* Bottom back fold */}
           <path
             d="M24 64 L76 44 L84 62 L32 82 Z"
-            fill="url(#darkFold)"
+            fill="url(#appleDarkFold)"
           />
           {/* Bottom horizontal fold bar */}
           <path
             d="M24 64 L78 64 L78 80 L24 80 Z"
-            fill="url(#blueRibbon)"
+            fill="url(#appleBlueRibbon)"
           />
         </svg>
       </div>
 
-      {/* DevSyntix Wordmark */}
+      {/* Apple SF Pro Wordmark */}
       {showWordmark && (
-        <div className="flex items-center tracking-tight font-heading">
-          <span className={`font-black text-white ${iconDimensions.textSize}`}>
+        <div className="flex items-center tracking-[-0.035em] font-bold">
+          <span className={`text-white ${iconDimensions.textSize}`}>
             Dev
           </span>
           <span
-            className={`font-black bg-gradient-to-r from-blue-400 via-cyan-400 to-violet-400 bg-clip-text text-transparent ${iconDimensions.textSize}`}
+            className={`bg-gradient-to-r from-[#29d8ff] via-[#af52de] to-[#0071e3] bg-clip-text text-transparent ${iconDimensions.textSize}`}
           >
             Syntix
           </span>
-          {/* Stylized code brackets accent like brand banner */}
-          <span className="ml-1 text-cyan-400 text-sm font-mono font-bold tracking-tighter opacity-80">
+          {/* Apple spatial terminal accent */}
+          <span className="ml-1 text-[11px] font-mono font-medium text-[#29d8ff]/80">
             &lt;/&gt;
           </span>
         </div>

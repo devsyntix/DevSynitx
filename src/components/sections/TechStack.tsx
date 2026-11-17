@@ -6,6 +6,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 interface TechItem {
   name: string;
   color: string;
+  tag: string;
 }
 
 interface TechCategory {
@@ -17,38 +18,38 @@ const techStack: TechCategory[] = [
   {
     label: "Frontend",
     items: [
-      { name: "React", color: "#61DAFB" },
-      { name: "Next.js", color: "#FFFFFF" },
-      { name: "Angular", color: "#DD0031" },
-      { name: "JavaScript", color: "#F7DF1E" },
-      { name: "TypeScript", color: "#3178C6" },
+      { name: "React", color: "#61DAFB", tag: "UI Framework" },
+      { name: "Next.js", color: "#FFFFFF", tag: "Full-Stack React" },
+      { name: "TypeScript", color: "#3178C6", tag: "Typed Architecture" },
+      { name: "Angular", color: "#DD0031", tag: "Enterprise Client" },
+      { name: "JavaScript", color: "#F7DF1E", tag: "Modern ESNext" },
     ],
   },
   {
     label: "Backend",
     items: [
-      { name: ".NET", color: "#512BD4" },
-      { name: "Node.js", color: "#339933" },
-      { name: "Python", color: "#3776AB" },
-      { name: "Java", color: "#ED8B00" },
+      { name: ".NET Core", color: "#512BD4", tag: "Enterprise API" },
+      { name: "Node.js", color: "#339933", tag: "Event Runtime" },
+      { name: "Python", color: "#3776AB", tag: "AI & Microservices" },
+      { name: "Java", color: "#ED8B00", tag: "Robust Distributed" },
     ],
   },
   {
     label: "Database",
     items: [
-      { name: "SQL Server", color: "#CC2927" },
-      { name: "PostgreSQL", color: "#4169E1" },
-      { name: "MongoDB", color: "#47A248" },
+      { name: "PostgreSQL", color: "#4169E1", tag: "Relational ACID" },
+      { name: "SQL Server", color: "#CC2927", tag: "Enterprise Relational" },
+      { name: "MongoDB", color: "#47A248", tag: "Document Store" },
     ],
   },
   {
     label: "Cloud & DevOps",
     items: [
-      { name: "Azure", color: "#0078D4" },
-      { name: "AWS", color: "#FF9900" },
-      { name: "Docker", color: "#2496ED" },
-      { name: "GitHub", color: "#FFFFFF" },
-      { name: "CI/CD", color: "#00C7B7" },
+      { name: "Azure", color: "#0078D4", tag: "Enterprise Cloud" },
+      { name: "AWS", color: "#FF9900", tag: "Scalable Infra" },
+      { name: "Docker", color: "#2496ED", tag: "Containers" },
+      { name: "GitHub Actions", color: "#FFFFFF", tag: "CI/CD Automation" },
+      { name: "CI/CD Pipelines", color: "#29D8FF", tag: "Zero-Downtime Deploy" },
     ],
   },
 ];
@@ -57,98 +58,99 @@ export default function TechStack() {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <section id="technologies" className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8">
-      {/* Floating background orbs */}
-      <div className="pointer-events-none absolute -right-32 top-1/4 -z-10 h-[500px] w-[500px] rounded-full bg-blue-500/5 blur-3xl" />
-      <div className="pointer-events-none absolute -left-32 bottom-1/4 -z-10 h-[400px] w-[400px] rounded-full bg-violet-500/5 blur-3xl" />
-      <div className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[300px] w-[300px] -translate-x-1/2 rounded-full bg-purple-500/5 blur-3xl" />
+    <section id="technologies" className="relative overflow-hidden bg-black px-6 py-28 md:py-36">
+      {/* Ambient background blur */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-32 top-1/4 -z-10 h-[500px] w-[500px] rounded-full bg-[#0071e3]/10 blur-[150px]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-32 bottom-1/4 -z-10 h-[500px] w-[500px] rounded-full bg-[#af52de]/10 blur-[150px]"
+      />
 
       <div className="mx-auto max-w-7xl">
         <SectionHeading
-          title="Technology Stack"
-          subtitle="Modern tools and frameworks we use to build exceptional products"
+          tag="Technology Matrix"
+          title="Modern Stack. Infinite Scale."
+          subtitle="Battle-tested frameworks, cloud infrastructure, and modern toolchains powering our software solutions."
         />
 
-        {/* Category tabs */}
-        <div className="mb-10 flex flex-wrap justify-center gap-3">
-          {techStack.map((category, index) => (
-            <button
-              key={category.label}
-              onClick={() => setActiveTab(index)}
-              className={`rounded-full border px-5 py-2.5 text-sm font-medium transition-all duration-300 ${
-                activeTab === index
-                  ? "border-blue-500/50 bg-gradient-to-r from-blue-500/20 to-violet-500/20 text-white shadow-[0_0_20px_-5px_rgba(99,102,241,0.3)]"
-                  : "border-white/10 bg-white/[0.03] text-gray-400 hover:border-white/20 hover:bg-white/[0.06] hover:text-white"
-              }`}
-            >
-              {category.label}
-            </button>
-          ))}
+        {/* iOS 27 Segmented Control Tab Switcher */}
+        <div className="mt-14 sm:mt-16 flex justify-center">
+          <div className="inline-flex p-1.5 rounded-full bg-white/[0.06] border border-white/15 backdrop-blur-2xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] max-w-full overflow-x-auto">
+            {techStack.map((category, index) => {
+              const isActive = activeTab === index;
+              return (
+                <button
+                  key={category.label}
+                  onClick={() => setActiveTab(index)}
+                  className={`ios-btn px-5 py-2 rounded-full text-xs sm:text-sm font-semibold tracking-tight transition-all duration-300 ${
+                    isActive
+                      ? "text-white bg-white/[0.14] shadow-[0_4px_16px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.3)] border border-white/20"
+                      : "text-white/60 hover:text-white"
+                  }`}
+                >
+                  {category.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Active category tech items */}
-        <div className="mx-auto max-w-3xl">
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+        {/* Active Category Squircles */}
+        <div className="mx-auto max-w-4xl mt-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
             {techStack[activeTab].items.map((tech) => (
               <div
                 key={tech.name}
-                className="group relative flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-6 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/30 hover:bg-white/[0.06] hover:shadow-[0_0_25px_-5px_rgba(99,102,241,0.15)]"
+                className="ios-glass-card p-6 rounded-[24px] relative overflow-hidden group flex flex-col justify-between"
               >
-                {/* Colored dot indicator */}
-                <div
-                  className="h-3 w-3 rounded-full shadow-lg transition-transform duration-300 group-hover:scale-125"
-                  style={{
-                    backgroundColor: tech.color,
-                    boxShadow: `0 0 12px ${tech.color}40`,
-                  }}
-                />
+                {/* Top specular highlight */}
+                <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
 
-                <span className="text-center text-sm font-semibold text-white">
-                  {tech.name}
-                </span>
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-3.5 h-3.5 rounded-full shadow-lg"
+                      style={{
+                        backgroundColor: tech.color,
+                        boxShadow: `0 0 12px ${tech.color}60`,
+                      }}
+                    />
+                    <span className="text-base font-semibold tracking-tight text-white">
+                      {tech.name}
+                    </span>
+                  </div>
+                </div>
 
-                {/* Subtle bottom glow */}
-                <div
-                  className="pointer-events-none absolute inset-x-0 bottom-0 h-px rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-60"
-                  style={{
-                    background: `linear-gradient(90deg, transparent, ${tech.color}80, transparent)`,
-                  }}
-                />
+                <div className="mt-5 pt-3 border-t border-white/[0.06] flex items-center justify-between text-xs text-[#86868b]">
+                  <span>{tech.tag}</span>
+                  <span className="font-mono text-[10px] text-white/40">Verified</span>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* All categories overview below tabs */}
-        <div className="mt-16 space-y-10">
-          {techStack.map((category) => (
-            <div key={category.label}>
-              <div className="mb-4 flex items-center gap-3">
-                <div className="h-px flex-1 bg-gradient-to-r from-white/10 to-transparent" />
-                <span className="bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-xs font-bold uppercase tracking-widest text-transparent">
-                  {category.label}
-                </span>
-                <div className="h-px flex-1 bg-gradient-to-l from-white/10 to-transparent" />
-              </div>
-
-              <div className="flex flex-wrap justify-center gap-3">
-                {category.items.map((tech) => (
-                  <div
-                    key={tech.name}
-                    className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 backdrop-blur-md transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06]"
-                  >
-                    <div
-                      className="h-2 w-2 rounded-full"
-                      style={{ backgroundColor: tech.color }}
-                    />
-                    <span className="text-xs font-medium text-gray-300">
-                      {tech.name}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
+        {/* Global Stack Ecosystem Pills */}
+        <div className="mt-18 pt-12 border-t border-white/[0.08] text-center">
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#86868b] block mb-6">
+            Supported Enterprise Ecosystem
+          </span>
+          <div className="flex flex-wrap justify-center gap-2.5 max-w-4xl mx-auto">
+            {[
+              "React", "Next.js", "TypeScript", ".NET", "Python", "Node.js", 
+              "PostgreSQL", "SQL Server", "MongoDB", "AWS", "Azure", "Docker", "CI/CD"
+            ].map((tech) => (
+              <span
+                key={tech}
+                className="px-4 py-1.5 rounded-full text-xs font-medium text-white/80 bg-white/[0.04] border border-white/10 backdrop-blur-xl hover:border-white/25 transition-all"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>

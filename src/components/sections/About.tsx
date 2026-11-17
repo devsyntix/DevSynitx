@@ -2,14 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import SectionHeading from "@/components/ui/SectionHeading";
-import GlassCard from "@/components/ui/GlassCard";
 
 interface Stat {
   value: string;
   numericEnd: number;
   suffix: string;
   label: string;
-  glowColor: string;
+  sublabel: string;
 }
 
 const stats: Stat[] = [
@@ -17,33 +16,33 @@ const stats: Stat[] = [
     value: "50+",
     numericEnd: 50,
     suffix: "+",
-    label: "Projects Delivered",
-    glowColor: "rgba(59,130,246,0.5)",
+    label: "Enterprise Solutions",
+    sublabel: "Shipped globally with 100% SLA",
   },
   {
     value: "25+",
     numericEnd: 25,
     suffix: "+",
-    label: "Happy Clients",
-    glowColor: "rgba(139,92,246,0.5)",
+    label: "Partner Clients",
+    sublabel: "From seed-stage to Fortune 500",
   },
   {
     value: "5+",
     numericEnd: 5,
     suffix: "+",
-    label: "Years Experience",
-    glowColor: "rgba(6,182,212,0.5)",
+    label: "Years of Engineering",
+    sublabel: "Deep cloud & AI mastery",
   },
   {
     value: "99%",
     numericEnd: 99,
     suffix: "%",
-    label: "Client Satisfaction",
-    glowColor: "rgba(99,102,241,0.5)",
+    label: "Client Retention",
+    sublabel: "Long-term engineering partnerships",
   },
 ];
 
-function useCountUp(end: number, duration = 2000, trigger = false): number {
+function useCountUp(end: number, duration = 1800, trigger = false): number {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -56,8 +55,8 @@ function useCountUp(end: number, duration = 2000, trigger = false): number {
       if (!startTimestamp) startTimestamp = timestamp;
       const elapsed = timestamp - startTimestamp;
       const progress = Math.min(elapsed / duration, 1);
-      // ease-out quad
-      const eased = 1 - (1 - progress) * (1 - progress);
+      // Apple ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
       setCount(Math.floor(eased * end));
 
       if (progress < 1) {
@@ -72,27 +71,27 @@ function useCountUp(end: number, duration = 2000, trigger = false): number {
   return count;
 }
 
-function StatCounter({
-  stat,
-  inView,
-}: {
-  stat: Stat;
-  inView: boolean;
-}) {
-  const count = useCountUp(stat.numericEnd, 2000, inView);
+function AppleStatCard({ stat, inView }: { stat: Stat; inView: boolean }) {
+  const count = useCountUp(stat.numericEnd, 1800, inView);
 
   return (
-    <GlassCard glowColor={stat.glowColor} hoverEffect>
-      <div className="flex flex-col items-center gap-2 py-6 text-center">
-        <span className="bg-gradient-to-r from-blue-400 via-violet-400 to-cyan-400 bg-clip-text font-heading text-4xl font-extrabold text-transparent sm:text-5xl">
-          {inView ? count : 0}
-          {stat.suffix}
-        </span>
-        <span className="text-sm font-medium tracking-wide text-white/50">
+    <div className="ios-glass-card p-8 rounded-[28px] relative overflow-hidden group">
+      {/* Specular top corner highlight */}
+      <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+      
+      <div className="flex flex-col gap-2">
+        <div className="text-5xl sm:text-6xl font-bold tracking-tight text-white flex items-baseline">
+          <span>{inView ? count : 0}</span>
+          <span className="text-[#29d8ff] text-4xl ml-0.5">{stat.suffix}</span>
+        </div>
+        <h4 className="text-base font-semibold tracking-tight text-white/90 mt-2">
           {stat.label}
-        </span>
+        </h4>
+        <p className="text-xs text-[#86868b] leading-relaxed">
+          {stat.sublabel}
+        </p>
       </div>
-    </GlassCard>
+    </div>
   );
 }
 
@@ -111,7 +110,7 @@ export default function About() {
           observer.disconnect();
         }
       },
-      { threshold: 0.25 }
+      { threshold: 0.2 }
     );
 
     observer.observe(el);
@@ -122,32 +121,25 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="relative overflow-hidden bg-[#050510] py-24 md:py-32"
+      className="relative overflow-hidden bg-black py-28 md:py-36 px-6"
     >
-      {/* Decorative gradient orb */}
+      {/* Ambient background glow */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-0 h-[480px] w-[480px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-600/10 blur-[140px]"
+        className="pointer-events-none absolute left-1/2 top-10 -translate-x-1/2 h-[500px] w-[500px] rounded-full bg-[#af52de]/10 blur-[150px]"
       />
 
-      <div className="relative z-10 mx-auto max-w-6xl px-6">
-        {/* Heading */}
+      <div className="relative z-10 mx-auto max-w-6xl">
+        {/* Apple Style Section Header */}
         <SectionHeading
           title="Technology Meets Creativity."
           subtitle="DevSyntix is a technology-driven company focused on building innovative software solutions, scalable applications, and intelligent digital experiences that help businesses grow."
         />
 
-        {/* Divider */}
-        <div className="mx-auto my-14 flex items-center justify-center gap-3 md:my-16">
-          <span className="h-px w-16 bg-gradient-to-r from-transparent to-blue-500/50" />
-          <span className="h-1.5 w-1.5 rounded-full bg-violet-500" />
-          <span className="h-px w-16 bg-gradient-to-l from-transparent to-violet-500/50" />
-        </div>
-
-        {/* Stats grid */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Apple Squircles Metric Grid */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mt-16 sm:mt-20">
           {stats.map((stat) => (
-            <StatCounter key={stat.label} stat={stat} inView={inView} />
+            <AppleStatCard key={stat.label} stat={stat} inView={inView} />
           ))}
         </div>
       </div>

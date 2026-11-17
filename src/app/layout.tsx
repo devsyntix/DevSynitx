@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -10,16 +10,11 @@ const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
-});
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-  display: "swap",
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
-  title: "DevSyntix | Building Digital Experiences. Engineering Tomorrow.",
+  title: "DevSyntix — Building Digital Experiences. Engineering Tomorrow.",
   description:
     "We transform ideas into powerful digital products through innovative software engineering, intelligent automation, and scalable SaaS solutions.",
   keywords: [
@@ -36,7 +31,7 @@ export const metadata: Metadata = {
   creator: "DevSyntix",
   metadataBase: new URL("https://devsyntix.com"),
   openGraph: {
-    title: "DevSyntix | Building Digital Experiences. Engineering Tomorrow.",
+    title: "DevSyntix — Building Digital Experiences. Engineering Tomorrow.",
     description:
       "We transform ideas into powerful digital products through innovative software engineering, intelligent automation, and scalable SaaS solutions.",
     url: "https://devsyntix.com",
@@ -54,7 +49,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "DevSyntix | Building Digital Experiences. Engineering Tomorrow.",
+    title: "DevSyntix — Building Digital Experiences. Engineering Tomorrow.",
     description:
       "We transform ideas into powerful digital products through innovative software engineering, intelligent automation, and scalable SaaS solutions.",
     images: ["/brand/banner.png"],
@@ -74,9 +69,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${spaceGrotesk.variable} scroll-smooth dark`}
+      className={`${inter.variable} scroll-smooth dark`}
+      style={{
+        fontFamily:
+          '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", var(--font-inter), system-ui, sans-serif',
+      }}
     >
-      <body className="min-h-screen bg-[#030308] text-gray-100 antialiased selection:bg-cyan-500/30 selection:text-white flex flex-col">
+      <body className="min-h-screen bg-black text-[#f5f5f7] antialiased selection:bg-[#29d8ff]/30 selection:text-white flex flex-col font-sans">
         <CustomCursor />
         <SmoothScroll>
           <Navbar />

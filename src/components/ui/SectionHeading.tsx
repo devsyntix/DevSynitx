@@ -1,48 +1,47 @@
+import React from "react";
+
 interface SectionHeadingProps {
   title: string;
   subtitle?: string;
-  /** Apply gradient text to the title (default: true) */
+  tag?: string;
   gradient?: boolean;
-  /** Center the heading (default: true) */
   centered?: boolean;
 }
 
 export default function SectionHeading({
   title,
   subtitle,
+  tag,
   gradient = true,
   centered = true,
 }: SectionHeadingProps) {
   return (
-    <div className={centered ? "text-center" : ""}>
-      {/* Decorative label */}
-      <div
-        className={`mb-4 flex items-center gap-3 ${
-          centered ? "justify-center" : ""
-        }`}
-      >
-        <span className="h-px w-8 bg-gradient-to-r from-blue-500 to-violet-500" />
-        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-400/80">
-          Who We Are
-        </span>
-        <span className="h-px w-8 bg-gradient-to-r from-violet-500 to-blue-500" />
-      </div>
+    <div className={`space-y-4 ${centered ? "text-center mx-auto" : ""}`}>
+      {/* Apple iOS Tag Pill */}
+      {tag && (
+        <div className={`inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.12] backdrop-blur-xl ${centered ? "mx-auto" : ""}`}>
+          <span className="w-1.5 h-1.5 rounded-full bg-[#29d8ff] shadow-[0_0_8px_#29d8ff]" />
+          <span className="text-[11px] font-semibold tracking-wide uppercase text-white/80">
+            {tag}
+          </span>
+        </div>
+      )}
 
-      {/* Title */}
+      {/* Apple SF Pro Headline */}
       <h2
-        className={`font-heading text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl md:text-5xl ${
+        className={`text-3xl sm:text-5xl md:text-6xl font-bold tracking-[-0.035em] leading-[1.08] ${
           gradient
-            ? "bg-gradient-to-r from-blue-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent"
+            ? "bg-gradient-to-r from-white via-[#f5f5f7] to-[#86868b] bg-clip-text text-transparent"
             : "text-white"
         }`}
       >
         {title}
       </h2>
 
-      {/* Subtitle */}
+      {/* Apple Subheading */}
       {subtitle && (
         <p
-          className={`mt-4 text-base leading-relaxed text-white/50 sm:text-lg md:mt-6 md:text-xl ${
+          className={`text-base sm:text-lg text-[#86868b] leading-relaxed tracking-[-0.015em] font-normal ${
             centered ? "mx-auto max-w-2xl" : "max-w-2xl"
           }`}
         >

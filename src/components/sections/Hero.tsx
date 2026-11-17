@@ -2,9 +2,9 @@
 
 import React from "react";
 import dynamic from "next/dynamic";
-import { ArrowRight, MessageSquare, Sparkles, Terminal, Code2, Cpu } from "lucide-react";
+import { ArrowRight, MessageSquare, Sparkles, Terminal, Activity, Layers } from "lucide-react";
 
-// Dynamically load the 3D canvas so it initializes only on the client with WebGL
+// WebGL 3D Model loads dynamically for high-performance client rendering
 const HeroCanvas3D = dynamic(() => import("@/components/ui/HeroCanvas3D"), {
   ssr: false,
 });
@@ -20,120 +20,120 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#030308] pt-28 pb-20 md:pt-36 md:pb-32"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black pt-32 pb-24 md:pt-44 md:pb-36"
     >
       {/* ── 3D Interactive WebGL Tech Model Canvas ── */}
       <HeroCanvas3D />
 
-      {/* ── Animated Background Lighting / Gradient Orbs ── */}
+      {/* ── Apple iOS 27 Spatial Aurora Ambient Lighting ── */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 overflow-hidden"
       >
-        <div className="hero-orb hero-orb-1 absolute -top-32 -left-32 h-[550px] w-[550px] rounded-full bg-blue-600/20 blur-[140px]" />
-        <div className="hero-orb hero-orb-2 absolute top-1/4 right-[-10%] h-[480px] w-[480px] rounded-full bg-violet-600/25 blur-[140px]" />
-        <div className="hero-orb hero-orb-3 absolute -bottom-10 left-1/3 h-[420px] w-[420px] rounded-full bg-cyan-500/20 blur-[130px]" />
+        <div className="hero-aurora hero-aurora-1 absolute -top-40 left-1/2 -translate-x-1/2 h-[650px] w-[800px] rounded-full bg-gradient-to-b from-[#0071e3]/20 via-[#af52de]/15 to-transparent blur-[160px]" />
+        <div className="hero-aurora hero-aurora-2 absolute top-1/3 -left-32 h-[450px] w-[450px] rounded-full bg-[#29d8ff]/15 blur-[140px]" />
+        <div className="hero-aurora hero-aurora-3 absolute -bottom-20 -right-20 h-[500px] w-[500px] rounded-full bg-[#af52de]/20 blur-[150px]" />
       </div>
 
-      {/* ── Cyber Tech Grid Overlay ── */}
+      {/* ── Apple Vision Spatial Frosted Grid ── */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        className="pointer-events-none absolute inset-0 opacity-[0.035]"
         style={{
           backgroundImage:
-            "linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px)",
-          backgroundSize: "64px 64px",
+            "radial-gradient(rgba(255, 255, 255, 0.4) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
         }}
       />
 
-      {/* ── Floating Futuristic Glass Cards (Hidden on small screens) ── */}
+      {/* ── iOS 27 Spatial Floating Widgets (Desktop) ── */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 max-w-7xl mx-auto"
+        className="pointer-events-none absolute inset-0 max-w-7xl mx-auto px-6"
       >
-        {/* Top-Left: Code & Architecture Card */}
-        <div className="hero-float-card hero-float-card-1 absolute left-6 top-[22%] hidden lg:flex items-center gap-3 rounded-2xl border border-white/10 bg-black/40 px-4 py-3 backdrop-blur-xl shadow-2xl">
-          <div className="w-9 h-9 rounded-xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-cyan-400">
+        {/* Top-Left: iOS 27 System Telemetry Widget */}
+        <div className="hero-float-card hero-float-card-1 absolute left-8 top-[24%] hidden xl:flex items-center gap-3 p-4 rounded-[24px] ios-glass shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_1.5px_rgba(255,255,255,0.3)]">
+          <div className="w-10 h-10 rounded-2xl bg-white/[0.08] border border-white/20 flex items-center justify-center text-[#29d8ff] shadow-inner">
+            <Activity className="w-5 h-5 animate-pulse" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#30d158] shadow-[0_0_8px_#30d158]" />
+              <span className="text-[12px] font-semibold text-white tracking-tight">
+                Neural Core SLA
+              </span>
+            </div>
+            <div className="text-[11px] font-mono text-[#86868b] mt-0.5">
+              0.8ms Latency &bull; 99.999%
+            </div>
+          </div>
+        </div>
+
+        {/* Top-Right: iOS 27 Architecture Pill */}
+        <div className="hero-float-card hero-float-card-2 absolute right-8 top-[26%] hidden xl:flex items-center gap-3 p-4 rounded-[24px] ios-glass shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_1.5px_rgba(255,255,255,0.3)]">
+          <div className="w-10 h-10 rounded-2xl bg-white/[0.08] border border-white/20 flex items-center justify-center text-[#af52de] shadow-inner">
+            <Layers className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="text-[12px] font-semibold text-white tracking-tight">
+              Spatial Cloud Matrix
+            </div>
+            <div className="text-[11px] text-[#29d8ff] font-mono mt-0.5">
+              Next.js 16 &bull; Cloud SaaS
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom-Right: iOS Code Engine */}
+        <div className="hero-float-card hero-float-card-3 absolute right-16 bottom-[18%] hidden lg:flex items-center gap-3 p-3.5 rounded-[22px] ios-glass shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_1.5px_rgba(255,255,255,0.3)]">
+          <div className="w-8 h-8 rounded-xl bg-white/[0.08] border border-white/20 flex items-center justify-center text-[#0071e3]">
             <Terminal className="w-4 h-4" />
           </div>
-          <div>
-            <div className="text-[11px] font-mono text-cyan-300 font-semibold">
-              DevSyntix.Architect()
-            </div>
-            <div className="text-[10px] text-gray-400 font-mono">
-              &gt; High-Throughput Cloud SaaS
-            </div>
-          </div>
-        </div>
-
-        {/* Top-Right: AI & Automation Status Card */}
-        <div className="hero-float-card hero-float-card-2 absolute right-8 top-[28%] hidden lg:flex items-center gap-3 rounded-2xl border border-white/10 bg-black/40 px-4 py-3 backdrop-blur-xl shadow-2xl">
-          <div className="w-9 h-9 rounded-xl bg-violet-500/20 border border-violet-500/30 flex items-center justify-center text-violet-400">
-            <Cpu className="w-4 h-4" />
-          </div>
-          <div>
-            <div className="flex items-center gap-1.5 text-[11px] font-medium text-white">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Intelligent Systems</span>
-            </div>
-            <div className="text-[10px] text-gray-400 font-mono">
-              99.99% Architecture SLA
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom-Right: Deployed Solutions */}
-        <div className="hero-float-card hero-float-card-3 absolute right-16 bottom-[18%] hidden xl:flex items-center gap-3 rounded-2xl border border-white/10 bg-black/40 px-4 py-3 backdrop-blur-xl shadow-2xl">
-          <div className="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
-            <Code2 className="w-4 h-4" />
-          </div>
-          <div>
-            <div className="text-[11px] font-semibold text-white">
-              Full-Stack Solutions
-            </div>
-            <div className="text-[10px] text-cyan-300/80 font-mono">
-              Next.js • .NET • Cloud • AI
-            </div>
-          </div>
+          <span className="text-[12px] font-mono font-medium text-white/80">
+            DevSyntix.Deploy(SaaS)
+          </span>
         </div>
       </div>
 
-      {/* ── Main Hero Content ── */}
+      {/* ── Main Hero Section ── */}
       <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
-        {/* Pill Badge */}
-        <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-950/20 px-4 py-1.5 backdrop-blur-md mb-8 shadow-[0_0_20px_-3px_rgba(6,182,212,0.3)]">
-          <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-          <span className="text-xs font-semibold uppercase tracking-wider bg-gradient-to-r from-cyan-300 via-blue-200 to-violet-300 bg-clip-text text-transparent">
-            Next-Gen Software Development &bull; SaaS &bull; AI
+        {/* Apple iOS 27 Status Pill */}
+        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/[0.06] border border-white/[0.14] backdrop-blur-2xl mb-8 shadow-[inset_0_1px_1px_rgba(255,255,255,0.25)]">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#29d8ff] opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#29d8ff]" />
+          </span>
+          <span className="text-xs font-semibold tracking-tight text-white/90">
+            Next-Gen Software Engineering &bull; SaaS &bull; AI
           </span>
         </div>
 
-        {/* Primary Heading */}
-        <h1 className="font-heading text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[1.08] max-w-4xl mx-auto">
+        {/* Apple Headline with Precision SF Typography */}
+        <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold tracking-[-0.04em] text-white leading-[1.04] max-w-4xl mx-auto">
           Building{" "}
-          <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-sky-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-white via-[#f5f5f7] to-[#86868b] bg-clip-text text-transparent">
             Digital
           </span>{" "}
           Experiences.
           <br />
           Engineering{" "}
-          <span className="bg-gradient-to-r from-violet-400 via-indigo-300 to-cyan-300 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-[#29d8ff] via-[#af52de] to-[#0071e3] bg-clip-text text-transparent">
             Tomorrow.
           </span>
         </h1>
 
-        {/* Supporting Paragraph */}
-        <p className="mx-auto mt-7 max-w-2xl text-base sm:text-lg md:text-xl text-gray-300/80 leading-relaxed font-normal">
+        {/* Apple Neutral Body Copy */}
+        <p className="mx-auto mt-8 max-w-2xl text-lg sm:text-xl text-[#a1a1a6] leading-relaxed font-normal tracking-[-0.015em]">
           We transform ideas into powerful digital products through innovative
           software engineering, intelligent automation, and scalable SaaS
           solutions.
         </p>
 
-        {/* CTAs */}
-        <div className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+        {/* iOS 27 CTA Buttons with Apple Intelligence Aura */}
+        <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
           <button
             onClick={() => handleScrollTo("services")}
-            className="group relative inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-4 text-sm font-bold uppercase tracking-wider text-white rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 shadow-[0_0_35px_-5px_rgba(99,102,241,0.6)] hover:shadow-[0_0_45px_-5px_rgba(6,182,212,0.7)] transition-all duration-300 hover:scale-105 active:scale-95 border border-white/20"
+            className="apple-intelligence-glow ios-btn group relative inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-4 text-sm font-semibold tracking-tight text-white rounded-full bg-white/[0.12] backdrop-blur-3xl border border-white/20 shadow-[inset_0_1px_2px_rgba(255,255,255,0.4),0_10px_35px_rgba(41,216,255,0.3)] hover:bg-white/[0.18]"
           >
             <span>Explore Our Services</span>
             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -141,110 +141,93 @@ export default function Hero() {
 
           <button
             onClick={() => handleScrollTo("contact")}
-            className="group inline-flex items-center justify-center gap-2.5 w-full sm:w-auto px-8 py-4 text-sm font-bold uppercase tracking-wider text-white rounded-2xl bg-white/[0.04] border border-white/15 backdrop-blur-xl hover:border-cyan-400/50 hover:bg-cyan-500/10 hover:text-cyan-300 transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg"
+            className="ios-btn group inline-flex items-center justify-center gap-2.5 w-full sm:w-auto px-8 py-4 text-sm font-semibold tracking-tight text-white rounded-full bg-white/[0.04] border border-white/12 backdrop-blur-2xl hover:border-white/30 hover:bg-white/[0.08] shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]"
           >
-            <MessageSquare className="w-4 h-4 text-cyan-400 transition-transform group-hover:scale-110" />
+            <MessageSquare className="w-4 h-4 text-[#29d8ff] transition-transform group-hover:scale-110" />
             <span>Let&apos;s Talk</span>
           </button>
         </div>
 
-        {/* Brand Proof / Micro-Stats */}
-        <div className="mt-16 pt-8 border-t border-white/[0.08] max-w-2xl mx-auto grid grid-cols-3 gap-6 text-center">
+        {/* Apple Metrics Triad */}
+        <div className="mt-18 pt-10 border-t border-white/[0.08] max-w-2xl mx-auto grid grid-cols-3 gap-6 text-center">
           <div>
-            <div className="text-xl sm:text-2xl font-black text-white font-heading">
+            <div className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
               100%
             </div>
-            <div className="text-xs text-gray-400 font-medium mt-0.5">
+            <div className="text-xs text-[#86868b] font-medium mt-1">
               Code Precision
             </div>
           </div>
           <div>
-            <div className="text-xl sm:text-2xl font-black bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent font-heading">
+            <div className="text-2xl sm:text-3xl font-bold tracking-tight bg-gradient-to-r from-[#29d8ff] to-[#0071e3] bg-clip-text text-transparent">
               Enterprise
             </div>
-            <div className="text-xs text-gray-400 font-medium mt-0.5">
-              Ready Architecture
+            <div className="text-xs text-[#86868b] font-medium mt-1">
+              Architecture
             </div>
           </div>
           <div>
-            <div className="text-xl sm:text-2xl font-black text-violet-400 font-heading">
-              Global
+            <div className="text-2xl sm:text-3xl font-bold tracking-tight text-[#af52de]">
+              Infinite
             </div>
-            <div className="text-xs text-gray-400 font-medium mt-0.5">
+            <div className="text-xs text-[#86868b] font-medium mt-1">
               Scalability
             </div>
           </div>
         </div>
       </div>
 
-      {/* ── Scroll Indicator ── */}
+      {/* ── iOS 27 Minimal Scroll Indicator ── */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
-        <span className="text-[10px] font-mono tracking-[0.25em] text-gray-500 uppercase">
-          Scroll
-        </span>
         <button
           onClick={() => handleScrollTo("about")}
-          aria-label="Scroll down to About section"
-          className="w-5 h-8 rounded-full border border-white/20 flex items-start justify-center p-1 hover:border-cyan-400 transition-colors"
+          aria-label="Scroll to About section"
+          className="ios-btn flex flex-col items-center gap-2 text-[#86868b] hover:text-white transition-colors"
         >
-          <span className="w-1.5 h-2 rounded-full bg-cyan-400 animate-bounce" />
+          <span className="text-[10px] font-semibold tracking-[0.2em] uppercase">
+            Scroll
+          </span>
+          <div className="w-4 h-7 rounded-full border border-white/20 flex items-start justify-center p-1">
+            <span className="w-1 h-1.5 rounded-full bg-[#29d8ff] animate-bounce" />
+          </div>
         </button>
       </div>
 
-      {/* Scoped CSS animations */}
+      {/* Floating Card Animations */}
       <style jsx>{`
-        .hero-orb-1 {
-          animation: floatOrb1 16s ease-in-out infinite;
+        .hero-aurora-1 {
+          animation: auroraShift 14s ease-in-out infinite alternate;
         }
-        .hero-orb-2 {
-          animation: floatOrb2 18s ease-in-out infinite;
+        .hero-aurora-2 {
+          animation: auroraShift 16s ease-in-out infinite alternate-reverse;
         }
-        .hero-orb-3 {
-          animation: floatOrb3 20s ease-in-out infinite;
+        .hero-aurora-3 {
+          animation: auroraShift 18s ease-in-out infinite alternate;
         }
-        @keyframes floatOrb1 {
-          0%,
-          100% {
+        @keyframes auroraShift {
+          0% {
             transform: translate(0, 0) scale(1);
           }
-          50% {
-            transform: translate(30px, 40px) scale(1.1);
-          }
-        }
-        @keyframes floatOrb2 {
-          0%,
           100% {
-            transform: translate(0, 0) scale(1);
-          }
-          50% {
-            transform: translate(-40px, 30px) scale(1.08);
-          }
-        }
-        @keyframes floatOrb3 {
-          0%,
-          100% {
-            transform: translate(0, 0) scale(1);
-          }
-          50% {
-            transform: translate(25px, -30px) scale(0.95);
+            transform: translate(30px, 20px) scale(1.08);
           }
         }
         .hero-float-card-1 {
-          animation: driftCard 10s ease-in-out infinite;
+          animation: iosDrift 10s ease-in-out infinite;
         }
         .hero-float-card-2 {
-          animation: driftCard 12s ease-in-out infinite reverse;
+          animation: iosDrift 12s ease-in-out infinite 1s;
         }
         .hero-float-card-3 {
-          animation: driftCard 14s ease-in-out infinite 2s;
+          animation: iosDrift 14s ease-in-out infinite 2s;
         }
-        @keyframes driftCard {
+        @keyframes iosDrift {
           0%,
           100% {
             transform: translateY(0);
           }
           50% {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
           }
         }
       `}</style>

@@ -53,38 +53,32 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative bg-[#050508] border-t border-white/[0.08] overflow-hidden text-gray-300">
-      {/* Background glow orbs */}
+    <footer className="relative bg-black border-t border-white/[0.08] overflow-hidden text-[#86868b]">
+      {/* Subtle Apple ambient glow */}
       <div
-        className="pointer-events-none absolute -top-40 left-1/4 h-72 w-72 rounded-full bg-blue-600/10 blur-[120px]"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute -bottom-20 right-1/4 h-72 w-72 rounded-full bg-violet-600/10 blur-[120px]"
+        className="pointer-events-none absolute -top-40 left-1/3 h-72 w-72 rounded-full bg-[#0071e3]/10 blur-[140px]"
         aria-hidden="true"
       />
 
       <div className="max-w-7xl mx-auto px-6 pt-20 pb-12 relative z-10">
-        {/* Main Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 pb-16 border-b border-white/[0.08]">
-          {/* Col 1: Brand Info (5 cols) */}
+          {/* Brand Info (5 cols) */}
           <div className="lg:col-span-5 space-y-6">
             <a href="#home" className="inline-block">
               <BrandLogo size="lg" />
             </a>
-            <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
-              DevSyntix is a premier technology-driven software development and
-              SaaS solutions company. We engineer scalable systems, intelligent
-              automation, and high-impact digital experiences for forward-thinking
-              enterprises.
+            <p className="text-sm leading-relaxed max-w-sm text-[#86868b] tracking-tight">
+              DevSyntix is a premier technology-driven software engineering and
+              SaaS solutions enterprise. We build scalable digital products,
+              intelligent automation systems, and high-impact software for the next
+              decade.
             </p>
 
-            {/* Social Icons with Official SVGs */}
             <div className="pt-2">
-              <span className="block text-xs uppercase tracking-wider text-gray-500 font-semibold mb-3">
-                Connect With Us
+              <span className="block text-xs uppercase tracking-wider text-white/50 font-semibold mb-3">
+                Social Ecosystem
               </span>
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2">
                 {socialList.map((social) => {
                   const Icon = social.icon;
                   return (
@@ -94,10 +88,9 @@ export default function Footer() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`DevSyntix on ${social.name}`}
-                      className="group relative w-10 h-10 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-gray-400 hover:text-cyan-300 hover:border-cyan-500/40 hover:bg-cyan-500/10 transition-all duration-300 shadow-sm"
+                      className="ios-btn w-10 h-10 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center text-[#86868b] hover:text-white hover:border-white/30 hover:bg-white/[0.08] transition-all"
                     >
-                      <Icon className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
-                      <span className="sr-only">{social.name}</span>
+                      <Icon className="w-4 h-4" />
                     </a>
                   );
                 })}
@@ -105,10 +98,9 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Col 2: Quick Links (2 cols) */}
+          {/* Quick Links (2 cols) */}
           <div className="lg:col-span-2">
-            <h4 className="text-xs font-bold uppercase tracking-widest text-white/90 mb-5 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-white/90 mb-5">
               Navigation
             </h4>
             <ul className="space-y-3">
@@ -116,11 +108,8 @@ export default function Footer() {
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-sm text-gray-400 hover:text-cyan-300 transition-colors duration-200 flex items-center gap-1.5 group"
+                    className="text-sm text-[#86868b] hover:text-white transition-colors duration-200 tracking-tight"
                   >
-                    <span className="text-xs text-cyan-400/0 group-hover:text-cyan-400 transition-all duration-200">
-                      &rarr;
-                    </span>
                     {link.label}
                   </a>
                 </li>
@@ -128,10 +117,9 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Col 3: Services (3 cols) */}
+          {/* Services (3 cols) */}
           <div className="lg:col-span-3">
-            <h4 className="text-xs font-bold uppercase tracking-widest text-white/90 mb-5 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-white/90 mb-5">
               Core Capabilities
             </h4>
             <ul className="space-y-3">
@@ -139,7 +127,7 @@ export default function Footer() {
                 <li key={service.label}>
                   <a
                     href={service.href}
-                    className="text-sm text-gray-400 hover:text-violet-300 transition-colors duration-200 block truncate"
+                    className="text-sm text-[#86868b] hover:text-white transition-colors duration-200 block truncate tracking-tight"
                   >
                     {service.label}
                   </a>
@@ -148,52 +136,51 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Col 4: Contact Info (2 cols) */}
+          {/* Contact (2 cols) */}
           <div className="lg:col-span-2">
-            <h4 className="text-xs font-bold uppercase tracking-widest text-white/90 mb-5 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-              Get In Touch
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-white/90 mb-5">
+              Connect
             </h4>
-            <div className="space-y-4 text-sm text-gray-400">
+            <div className="space-y-4 text-sm text-[#86868b] tracking-tight">
               <div>
-                <span className="text-xs text-gray-500 block">General Inquiries</span>
+                <span className="text-xs text-white/40 block">Email</span>
                 <a
                   href={`mailto:${siteConfig.contact.email}`}
-                  className="text-white hover:text-cyan-300 font-medium transition-colors"
+                  className="text-white hover:text-[#29d8ff] transition-colors"
                 >
                   {siteConfig.contact.email}
                 </a>
               </div>
               <div>
-                <span className="text-xs text-gray-500 block">Direct Line</span>
+                <span className="text-xs text-white/40 block">Direct</span>
                 <a
                   href={`tel:${siteConfig.contact.phone.replace(/[^0-9+]/g, "")}`}
-                  className="text-white hover:text-cyan-300 font-medium transition-colors"
+                  className="text-white hover:text-[#29d8ff] transition-colors"
                 >
                   {siteConfig.contact.phone}
                 </a>
               </div>
               <div>
-                <span className="text-xs text-gray-500 block">Global HQ</span>
-                <span className="text-gray-300">{siteConfig.contact.location}</span>
+                <span className="text-xs text-white/40 block">Location</span>
+                <span className="text-white/80">{siteConfig.contact.location}</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+        {/* Apple Copyright Row */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#86868b]">
           <p>&copy; {currentYear} DevSyntix. All Rights Reserved.</p>
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-gray-300 transition-colors">
-              Privacy Policy
+            <a href="#" className="hover:text-white transition-colors">
+              Privacy
             </a>
             <span className="text-white/10">&bull;</span>
-            <a href="#" className="hover:text-gray-300 transition-colors">
-              Terms of Service
+            <a href="#" className="hover:text-white transition-colors">
+              Terms
             </a>
             <span className="text-white/10">&bull;</span>
-            <span className="text-cyan-400/80 font-mono">v2.0 • Production Ready</span>
+            <span className="text-[#29d8ff]/80 font-mono">iOS 27 Spatial Theme Active</span>
           </div>
         </div>
       </div>

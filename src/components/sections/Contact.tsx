@@ -10,6 +10,7 @@ import {
   LinkedInIcon,
 } from "@/components/ui/SocialIcons";
 import { siteConfig } from "@/config/site";
+import SectionHeading from "@/components/ui/SectionHeading";
 
 interface FormData {
   fullName: string;
@@ -53,22 +54,20 @@ export default function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate reliable API submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 900));
 
     setIsSubmitting(false);
     setIsSubmitted(true);
 
-    // Trigger celebratory particle confetti
     try {
       confetti({
-        particleCount: 80,
-        spread: 70,
+        particleCount: 90,
+        spread: 80,
         origin: { y: 0.6 },
-        colors: ["#00F0FF", "#3B82F6", "#8B5CF6", "#FFFFFF"],
+        colors: ["#29D8FF", "#AF52DE", "#0071E3", "#FFFFFF"],
       });
     } catch {
-      // Ignore if canvas confetti is blocked
+      // Ignore if confetti blocked
     }
   };
 
@@ -96,67 +95,52 @@ export default function Contact() {
   ];
 
   const inputClasses =
-    "w-full px-4 py-3.5 bg-white/[0.04] border border-white/10 rounded-xl text-white placeholder:text-gray-500 text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 focus:bg-white/[0.07]";
+    "w-full px-4 py-3.5 bg-white/[0.04] border border-white/12 rounded-2xl text-white placeholder:text-[#86868b] text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#29d8ff]/40 focus:border-[#29d8ff]/50 focus:bg-white/[0.07] tracking-tight";
 
   return (
     <section
       id="contact"
-      className="relative py-28 md:py-36 px-6 overflow-hidden bg-[#030308]"
+      className="relative py-28 md:py-36 px-6 overflow-hidden bg-black"
     >
-      {/* Background Glows */}
+      {/* Background ambient lighting */}
       <div
-        className="pointer-events-none absolute -top-40 right-10 w-[550px] h-[550px] bg-blue-600/10 rounded-full blur-[140px]"
+        className="pointer-events-none absolute -top-40 right-10 w-[600px] h-[600px] bg-[#0071e3]/10 rounded-full blur-[160px]"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute -bottom-40 left-10 w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[140px]"
+        className="pointer-events-none absolute -bottom-40 left-10 w-[550px] h-[550px] bg-[#af52de]/10 rounded-full blur-[160px]"
         aria-hidden="true"
       />
 
       <div className="relative z-10 max-w-6xl mx-auto">
-        {/* Section Heading */}
-        <div className="text-center mb-16 md:mb-20">
-          <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1.5 backdrop-blur-md mb-4 shadow-[0_0_15px_-3px_rgba(6,182,212,0.3)]">
-            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-            <span className="text-xs font-bold uppercase tracking-wider text-cyan-300">
-              Start A Conversation
-            </span>
-          </div>
+        <SectionHeading
+          tag="Initiate Contact"
+          title="Have an Idea? Let's Build Something Amazing."
+          subtitle="Let's turn your vision into a powerful digital solution. Connect with our principal engineering team."
+        />
 
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight font-heading">
-            Have an Idea?{" "}
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-violet-400 bg-clip-text text-transparent">
-              Let&apos;s Build
-            </span>
-            <br />
-            Something Amazing.
-          </h2>
-          <p className="mt-4 text-gray-400 text-base sm:text-lg max-w-2xl mx-auto">
-            Let&apos;s turn your vision into a powerful digital solution. Fill out
-            the form below, and our engineering team will get back to you within
-            24 hours.
-          </p>
-        </div>
-
-        {/* Two-Column Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
-          {/* Left Form (7 Cols) */}
+        {/* Two-Column iOS 27 Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start mt-16 sm:mt-20">
+          {/* Form Card (7 cols) */}
           <div className="lg:col-span-7">
-            <div className="relative p-6 sm:p-10 rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+            <div className="ios-glass p-8 sm:p-10 rounded-[32px] relative overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.85),inset_0_1px_1.5px_rgba(255,255,255,0.25)] border border-white/15">
+              {/* Specular highlight */}
+              <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+
               {isSubmitted ? (
                 <div className="py-12 text-center space-y-5">
-                  <div className="w-16 h-16 rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center mx-auto text-cyan-300 shadow-[0_0_30px_rgba(6,182,212,0.4)]">
+                  <div className="w-16 h-16 rounded-3xl bg-[#29d8ff]/15 border border-[#29d8ff]/30 flex items-center justify-center mx-auto text-[#29d8ff] shadow-[0_0_35px_rgba(41,216,255,0.35)]">
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white font-heading">
-                    Message Received!
+                  <h3 className="text-2xl font-bold tracking-tight text-white">
+                    Inquiry Received
                   </h3>
-                  <p className="text-gray-300 text-sm max-w-md mx-auto leading-relaxed">
+                  <p className="text-[#86868b] text-sm max-w-md mx-auto leading-relaxed">
                     Thank you,{" "}
                     <strong className="text-white">{formData.fullName}</strong>.
-                    Our technical leads are reviewing your project requirements
-                    and will reach out at{" "}
-                    <span className="text-cyan-400">{formData.email}</span>.
+                    Our technical architecture team will review your project
+                    scope and connect at{" "}
+                    <span className="text-[#29d8ff]">{formData.email}</span>.
                   </p>
                   <button
                     onClick={() => {
@@ -169,9 +153,9 @@ export default function Contact() {
                         message: "",
                       });
                     }}
-                    className="inline-flex items-center gap-2 px-6 py-2.5 text-xs font-semibold uppercase tracking-wider text-cyan-400 border border-cyan-500/30 rounded-xl hover:bg-cyan-500/10 transition-colors"
+                    className="ios-btn px-6 py-2.5 rounded-full text-xs font-semibold tracking-tight text-white/80 bg-white/[0.08] border border-white/15 hover:bg-white/[0.14] transition-all"
                   >
-                    Send Another Inquiry
+                    Submit Another Inquiry
                   </button>
                 </div>
               ) : (
@@ -181,9 +165,9 @@ export default function Contact() {
                     <div>
                       <label
                         htmlFor="fullName"
-                        className="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2"
+                        className="block text-xs font-semibold tracking-tight text-[#86868b] mb-2"
                       >
-                        Full Name <span className="text-cyan-400">*</span>
+                        Full Name <span className="text-[#29d8ff]">*</span>
                       </label>
                       <input
                         type="text"
@@ -191,7 +175,7 @@ export default function Contact() {
                         name="fullName"
                         value={formData.fullName}
                         onChange={handleChange}
-                        placeholder="Alex Morgan"
+                        placeholder="John Appleseed"
                         required
                         className={inputClasses}
                       />
@@ -201,9 +185,9 @@ export default function Contact() {
                     <div>
                       <label
                         htmlFor="email"
-                        className="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2"
+                        className="block text-xs font-semibold tracking-tight text-[#86868b] mb-2"
                       >
-                        Email Address <span className="text-cyan-400">*</span>
+                        Email Address <span className="text-[#29d8ff]">*</span>
                       </label>
                       <input
                         type="email"
@@ -211,7 +195,7 @@ export default function Contact() {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        placeholder="alex@company.com"
+                        placeholder="john@company.com"
                         required
                         className={inputClasses}
                       />
@@ -223,7 +207,7 @@ export default function Contact() {
                     <div>
                       <label
                         htmlFor="company"
-                        className="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2"
+                        className="block text-xs font-semibold tracking-tight text-[#86868b] mb-2"
                       >
                         Company Name
                       </label>
@@ -233,7 +217,7 @@ export default function Contact() {
                         name="company"
                         value={formData.company}
                         onChange={handleChange}
-                        placeholder="Acme Technologies"
+                        placeholder="Enterprise Inc."
                         className={inputClasses}
                       />
                     </div>
@@ -242,9 +226,9 @@ export default function Contact() {
                     <div>
                       <label
                         htmlFor="projectType"
-                        className="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2"
+                        className="block text-xs font-semibold tracking-tight text-[#86868b] mb-2"
                       >
-                        Project Type <span className="text-cyan-400">*</span>
+                        Project Type <span className="text-[#29d8ff]">*</span>
                       </label>
                       <select
                         id="projectType"
@@ -254,14 +238,14 @@ export default function Contact() {
                         required
                         className={`${inputClasses} appearance-none cursor-pointer`}
                       >
-                        <option value="" disabled className="bg-[#0b0b14] text-gray-400">
-                          Select Project Category
+                        <option value="" disabled className="bg-[#121218] text-[#86868b]">
+                          Select Focus Area
                         </option>
                         {projectTypes.map((type) => (
                           <option
                             key={type}
                             value={type}
-                            className="bg-[#0b0b14] text-white"
+                            className="bg-[#121218] text-white"
                           >
                             {type}
                           </option>
@@ -274,17 +258,17 @@ export default function Contact() {
                   <div>
                     <label
                       htmlFor="message"
-                      className="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2"
+                      className="block text-xs font-semibold tracking-tight text-[#86868b] mb-2"
                     >
-                      Project Details & Goals{" "}
-                      <span className="text-cyan-400">*</span>
+                      Project Specifications & Goals{" "}
+                      <span className="text-[#29d8ff]">*</span>
                     </label>
                     <textarea
                       id="message"
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
-                      placeholder="Tell us about your product, timeline, tech requirements, and target goals..."
+                      placeholder="Share your timeline, target architecture, user scale, and requirements..."
                       rows={4}
                       required
                       className={`${inputClasses} resize-none`}
@@ -295,17 +279,18 @@ export default function Contact() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-4 px-6 rounded-xl font-bold uppercase tracking-wider text-sm text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 shadow-[0_0_30px_-5px_rgba(99,102,241,0.5)] hover:shadow-[0_0_40px_-5px_rgba(6,182,212,0.6)] hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50"
+                    className="apple-intelligence-glow ios-btn w-full py-4 px-6 rounded-full font-semibold text-sm tracking-tight text-white bg-gradient-to-r from-[#0071e3] via-[#5856d6] to-[#af52de] shadow-[0_10px_35px_rgba(41,216,255,0.3)] hover:opacity-95 transition-all flex items-center justify-center gap-2.5 disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <>
                         <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        <span>Transmitting Inquiry...</span>
+                        <span>Transmitting Specification...</span>
                       </>
                     ) : (
                       <>
-                        <Send className="w-4 h-4" />
+                        <Sparkles className="w-4 h-4 text-[#29d8ff]" />
                         <span>Send Message</span>
+                        <Send className="w-4 h-4 ml-1" />
                       </>
                     )}
                   </button>
@@ -314,72 +299,71 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Right Direct Details (5 Cols) */}
+          {/* Direct Details & Social Links (5 cols) */}
           <div className="lg:col-span-5 space-y-6">
-            {/* Contact Cards */}
             <div className="space-y-4">
               <a
                 href={`mailto:${siteConfig.contact.email}`}
-                className="group flex items-start gap-4 p-5 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl transition-all duration-300 hover:border-cyan-500/40 hover:bg-cyan-500/5 hover:-translate-y-0.5 shadow-sm"
+                className="ios-glass-card group flex items-start gap-4 p-6 rounded-[28px]"
               >
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-105 transition-transform">
+                <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-white/[0.08] border border-white/15 flex items-center justify-center text-[#29d8ff] group-hover:scale-105 transition-transform">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-bold uppercase tracking-widest text-gray-500 block">
-                    Business Inquiries
+                  <span className="text-xs font-semibold tracking-wider uppercase text-[#86868b] block">
+                    Direct Email
                   </span>
-                  <p className="text-sm font-semibold text-white group-hover:text-cyan-300 transition-colors mt-0.5">
+                  <p className="text-base font-semibold tracking-tight text-white group-hover:text-[#29d8ff] transition-colors mt-0.5">
                     {siteConfig.contact.email}
                   </p>
-                  <p className="text-xs text-gray-500 mt-0.5">
-                    Avg response time: Under 4 hours
+                  <p className="text-xs text-[#86868b] mt-0.5">
+                    Guaranteed response under 4 hours
                   </p>
                 </div>
               </a>
 
               <a
                 href={`tel:${siteConfig.contact.phone.replace(/[^0-9+]/g, "")}`}
-                className="group flex items-start gap-4 p-5 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl transition-all duration-300 hover:border-blue-500/40 hover:bg-blue-500/5 hover:-translate-y-0.5 shadow-sm"
+                className="ios-glass-card group flex items-start gap-4 p-6 rounded-[28px]"
               >
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
+                <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-white/[0.08] border border-white/15 flex items-center justify-center text-[#0071e3] group-hover:scale-105 transition-transform">
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-bold uppercase tracking-widest text-gray-500 block">
-                    Direct Phone Line
+                  <span className="text-xs font-semibold tracking-wider uppercase text-[#86868b] block">
+                    Phone Consultation
                   </span>
-                  <p className="text-sm font-semibold text-white group-hover:text-blue-300 transition-colors mt-0.5">
+                  <p className="text-base font-semibold tracking-tight text-white group-hover:text-[#29d8ff] transition-colors mt-0.5">
                     {siteConfig.contact.phone}
                   </p>
-                  <p className="text-xs text-gray-500 mt-0.5">
-                    Mon - Fri, 9:00 AM - 6:00 PM EST
+                  <p className="text-xs text-[#86868b] mt-0.5">
+                    Mon - Fri &bull; 9:00 AM - 6:00 PM EST
                   </p>
                 </div>
               </a>
 
-              <div className="group flex items-start gap-4 p-5 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl transition-all duration-300 hover:border-violet-500/40 hover:bg-violet-500/5 hover:-translate-y-0.5 shadow-sm">
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-violet-500/10 border border-violet-500/30 flex items-center justify-center text-violet-400 group-hover:scale-105 transition-transform">
+              <div className="ios-glass-card group flex items-start gap-4 p-6 rounded-[28px]">
+                <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-white/[0.08] border border-white/15 flex items-center justify-center text-[#af52de] group-hover:scale-105 transition-transform">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-bold uppercase tracking-widest text-gray-500 block">
-                    Global Office Headquarters
+                  <span className="text-xs font-semibold tracking-wider uppercase text-[#86868b] block">
+                    Headquarters
                   </span>
-                  <p className="text-sm font-semibold text-white group-hover:text-violet-300 transition-colors mt-0.5">
+                  <p className="text-base font-semibold tracking-tight text-white group-hover:text-[#af52de] transition-colors mt-0.5">
                     {siteConfig.contact.location}
                   </p>
-                  <p className="text-xs text-gray-500 mt-0.5">
-                    Available for in-person &amp; virtual strategy sessions
+                  <p className="text-xs text-[#86868b] mt-0.5">
+                    Global digital engineering network
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Social Channels Box */}
-            <div className="p-6 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl">
-              <span className="text-xs font-bold uppercase tracking-wider text-gray-400 block mb-4">
-                Official Social Media Channels
+            {/* Social Channels Widget */}
+            <div className="ios-glass p-6 rounded-[28px] border border-white/15">
+              <span className="text-xs font-semibold uppercase tracking-wider text-[#86868b] block mb-4">
+                Official Channels
               </span>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {socialList.map((social) => {
@@ -390,10 +374,10 @@ export default function Contact() {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl border border-white/10 bg-white/[0.03] hover:border-cyan-400/40 hover:bg-cyan-500/10 text-gray-400 hover:text-cyan-300 transition-all duration-200 group"
+                      className="ios-btn flex flex-col items-center justify-center gap-2 p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/25 text-[#86868b] hover:text-[#29d8ff] transition-all group"
                     >
                       <Icon className="w-4 h-4 transition-transform group-hover:scale-110" />
-                      <span className="text-[11px] font-medium text-gray-300">
+                      <span className="text-[11px] font-medium tracking-tight text-white/80">
                         {social.name}
                       </span>
                     </a>
