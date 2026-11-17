@@ -28,7 +28,7 @@ export default function HeroCanvas3D() {
     // Scene, Camera, Renderer
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.z = 6;
+    camera.position.set(0, 0, 5.8);
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
@@ -38,143 +38,176 @@ export default function HeroCanvas3D() {
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
+    renderer.toneMappingExposure = 1.25;
     container.appendChild(renderer.domElement);
 
-    // Root Group for interactive rotation
-    const mainGroup = new THREE.Group();
-    scene.add(mainGroup);
+    // Texture Loader for Authentic Earth Maps
+    const textureLoader = new THREE.TextureLoader();
+    const earthDayMap = textureLoader.load("/textures/earth/earth_atmos_2048.jpg");
+    const earthNormalMap = textureLoader.load("/textures/earth/earth_normal_2048.jpg");
+    const earthSpecMap = textureLoader.load("/textures/earth/earth_specular_2048.jpg");
+    const earthCloudMap = textureLoader.load("/textures/earth/earth_clouds_1024.png");
 
-    // 1. Central Core: Glowing Dodecahedron / Icosahedron
-    const coreGeometry = new THREE.IcosahedronGeometry(1.4, 1);
-    const coreMaterial = new THREE.MeshPhysicalMaterial({
-      color: 0x00d2ff,
-      emissive: 0x0047ff,
-      emissiveIntensity: 0.6,
-      roughness: 0.1,
-      metalness: 0.8,
-      clearcoat: 1.0,
-      clearcoatRoughness: 0.1,
-      wireframe: false,
+    // Earth Root & Tilted Axial Group (23.4° real axial tilt)
+    const earthMasterGroup = new THREE.Group();
+    scene.add(earthMasterGroup);
+
+    const earthAxialGroup = new THREE.Group();
+    earthAxialGroup.rotation.z = THREE.MathUtils.degToRad(23.4);
+    earthAxialGroup.rotation.x = THREE.MathUtils.degToRad(8);
+    earthMasterGroup.add(earthAxialGroup);
+
+    // 1. Photorealistic Earth Sphere
+    const earthRadius = 1.62;
+    const earthGeometry = new THREE.SphereGeometry(earthRadius, 64, 64);
+    const earthMaterial = new THREE.MeshStandardMaterial({
+      map: earthDayMap,
+      normalMap: earthNormalMap,
+      normalScale: new THREE.Vector2(0.85, 0.85),
+      roughnessMap: earthSpecMap,
+      roughness: 0.65,
+      metalness: 0.1,
+    });
+    const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
+    earthAxialGroup.add(earthMesh);
+
+    // 2. Realistic Dynamic Cloud Layer
+    const cloudGeometry = new THREE.SphereGeometry(earthRadius + 0.025, 64, 64);
+    const cloudMaterial = new THREE.MeshStandardMaterial({
+      map: earthCloudMap,
       transparent: true,
-      opacity: 0.75,
+      opacity: 0.85,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
     });
-    const coreMesh = new THREE.Mesh(coreGeometry, coreMaterial);
-    mainGroup.add(coreMesh);
+    const cloudMesh = new THREE.Mesh(cloudGeometry, cloudMaterial);
+    earthAxialGroup.add(cloudMesh);
 
-    // 2. Wireframe Cage around Core
-    const cageGeometry = new THREE.IcosahedronGeometry(1.75, 1);
-    const cageWireframe = new THREE.WireframeGeometry(cageGeometry);
-    const cageMaterial = new THREE.LineBasicMaterial({
-      color: 0x8b5cf6,
+    // 3. Atmospheric Ozone Rim Glow (Custom Fresnel Shader)
+    const atmosphereGeometry = new THREE.SphereGeometry(earthRadius + 0.12, 48, 48);
+    const atmosphereMaterial = new THREE.ShaderMaterial({
+      vertexShader: `
+        varying vec3 vNormal;
+        void main() {
+          vNormal = normalize(normalMatrix * normal);
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        varying vec3 vNormal;
+        void main() {
+          float intensity = pow(0.68 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.4);
+          vec3 atmosphereColor = vec3(0.16, 0.84, 1.0);
+          gl_FragColor = vec4(atmosphereColor, 1.0) * intensity * 0.95;
+        }
+      `,
+      blending: THREE.AdditiveBlending,
+      side: THREE.BackSide,
       transparent: true,
-      opacity: 0.55,
-      linewidth: 1.5,
+      depthWrite: false,
     });
-    const cageMesh = new THREE.LineSegments(cageWireframe, cageMaterial);
-    mainGroup.add(cageMesh);
+    const atmosphereMesh = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
+    earthMasterGroup.add(atmosphereMesh);
 
-    // 3. Outer Orbiting Gyroscope Rings (Cyan & Violet)
-    const ringGeo1 = new THREE.TorusGeometry(2.3, 0.025, 16, 100);
-    const ringMat1 = new THREE.MeshStandardMaterial({
-      color: 0x06b6d4,
-      emissive: 0x06b6d4,
-      emissiveIntensity: 0.8,
-      roughness: 0.2,
-      metalness: 0.9,
+    // 4. DevSyntix Global Digital Network Rings
+    const networkRingGeo1 = new THREE.TorusGeometry(2.15, 0.015, 16, 120);
+    const networkRingMat1 = new THREE.MeshBasicMaterial({
+      color: 0x29d8ff,
+      transparent: true,
+      opacity: 0.45,
     });
-    const ring1 = new THREE.Mesh(ringGeo1, ringMat1);
-    ring1.rotation.x = Math.PI / 3;
-    mainGroup.add(ring1);
+    const ring1 = new THREE.Mesh(networkRingGeo1, networkRingMat1);
+    ring1.rotation.x = Math.PI / 2.7;
+    ring1.rotation.y = Math.PI / 8;
+    earthMasterGroup.add(ring1);
 
-    const ringGeo2 = new THREE.TorusGeometry(2.5, 0.02, 16, 100);
-    const ringMat2 = new THREE.MeshStandardMaterial({
-      color: 0x8b5cf6,
-      emissive: 0x6366f1,
-      emissiveIntensity: 0.8,
-      roughness: 0.2,
-      metalness: 0.9,
+    const networkRingGeo2 = new THREE.TorusGeometry(2.35, 0.012, 16, 120);
+    const networkRingMat2 = new THREE.MeshBasicMaterial({
+      color: 0xaf52de,
+      transparent: true,
+      opacity: 0.35,
     });
-    const ring2 = new THREE.Mesh(ringGeo2, ringMat2);
-    ring2.rotation.y = Math.PI / 4;
-    mainGroup.add(ring2);
+    const ring2 = new THREE.Mesh(networkRingGeo2, networkRingMat2);
+    ring2.rotation.x = -Math.PI / 3.2;
+    ring2.rotation.y = -Math.PI / 6;
+    earthMasterGroup.add(ring2);
 
-    // 4. Floating Data Nodes / Satellites
-    const nodeCount = 14;
-    const nodeGeometry = new THREE.SphereGeometry(0.06, 16, 16);
-    const nodeMaterial = new THREE.MeshStandardMaterial({
+    // 5. Global Telemetry Satellites / Digital Beacons
+    const satelliteCount = 10;
+    const satelliteGeo = new THREE.SphereGeometry(0.04, 16, 16);
+    const satelliteMat = new THREE.MeshStandardMaterial({
       color: 0xffffff,
-      emissive: 0x38bdf8,
-      emissiveIntensity: 1.5,
+      emissive: 0x29d8ff,
+      emissiveIntensity: 2.0,
     });
-    const nodeGroup = new THREE.Group();
-    for (let i = 0; i < nodeCount; i++) {
-      const mesh = new THREE.Mesh(nodeGeometry, nodeMaterial);
-      const theta = (i / nodeCount) * Math.PI * 2;
-      const radius = 2.1 + (i % 3) * 0.2;
+    const satelliteGroup = new THREE.Group();
+    for (let i = 0; i < satelliteCount; i++) {
+      const mesh = new THREE.Mesh(satelliteGeo, satelliteMat);
+      const angle = (i / satelliteCount) * Math.PI * 2;
+      const radius = 2.15 + (i % 2) * 0.2;
       mesh.position.set(
-        Math.cos(theta) * radius,
-        (Math.sin(theta * 2) * radius) / 3,
-        Math.sin(theta) * radius
+        Math.cos(angle) * radius,
+        (Math.sin(angle * 2) * radius) / 3.5,
+        Math.sin(angle) * radius
       );
-      nodeGroup.add(mesh);
+      satelliteGroup.add(mesh);
     }
-    mainGroup.add(nodeGroup);
+    earthMasterGroup.add(satelliteGroup);
 
-    // 5. Starfield / Cyber Particles
-    const particleCount = 200;
-    const particlePositions = new Float32Array(particleCount * 3);
-    const particleColors = new Float32Array(particleCount * 3);
+    // 6. Deep Space Background Starfield
+    const starCount = 220;
+    const starPositions = new Float32Array(starCount * 3);
+    const starColors = new Float32Array(starCount * 3);
 
-    for (let i = 0; i < particleCount; i++) {
-      particlePositions[i * 3] = (Math.random() - 0.5) * 16;
-      particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 12;
-      particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+    for (let i = 0; i < starCount; i++) {
+      starPositions[i * 3] = (Math.random() - 0.5) * 16;
+      starPositions[i * 3 + 1] = (Math.random() - 0.5) * 12;
+      starPositions[i * 3 + 2] = (Math.random() - 0.5) * 10 - 2;
 
-      // Mix cyan and violet
-      const isCyan = Math.random() > 0.5;
-      particleColors[i * 3] = isCyan ? 0.0 : 0.54;
-      particleColors[i * 3 + 1] = isCyan ? 0.82 : 0.36;
-      particleColors[i * 3 + 2] = isCyan ? 1.0 : 0.96;
+      const isCyan = Math.random() > 0.4;
+      starColors[i * 3] = isCyan ? 0.16 : 0.68;
+      starColors[i * 3 + 1] = isCyan ? 0.85 : 0.32;
+      starColors[i * 3 + 2] = 1.0;
     }
 
-    const particleGeometry = new THREE.BufferGeometry();
-    particleGeometry.setAttribute(
+    const starGeometry = new THREE.BufferGeometry();
+    starGeometry.setAttribute(
       "position",
-      new THREE.BufferAttribute(particlePositions, 3)
+      new THREE.BufferAttribute(starPositions, 3)
     );
-    particleGeometry.setAttribute(
-      "color",
-      new THREE.BufferAttribute(particleColors, 3)
-    );
+    starGeometry.setAttribute("color", new THREE.BufferAttribute(starColors, 3));
 
-    const particleMaterial = new THREE.PointsMaterial({
-      size: 0.05,
+    const starMaterial = new THREE.PointsMaterial({
+      size: 0.045,
       vertexColors: true,
       transparent: true,
-      opacity: 0.65,
+      opacity: 0.6,
       blending: THREE.AdditiveBlending,
     });
-    const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
-    scene.add(particleSystem);
+    const starSystem = new THREE.Points(starGeometry, starMaterial);
+    scene.add(starSystem);
 
-    // Lights
-    const ambientLight = new THREE.AmbientLight(0x0a0a20, 2);
+    // 7. Realistic Solar & Deep Space Lighting
+    // Sun key light illuminating one hemisphere realistically
+    const sunLight = new THREE.DirectionalLight(0xffffff, 2.8);
+    sunLight.position.set(5, 3, 5);
+    scene.add(sunLight);
+
+    // Night side deep space rim fill light
+    const spaceRimLight = new THREE.DirectionalLight(0x0047ff, 0.85);
+    spaceRimLight.position.set(-5, -2, -3);
+    scene.add(spaceRimLight);
+
+    // Ambient space lighting
+    const ambientLight = new THREE.AmbientLight(0x091428, 0.9);
     scene.add(ambientLight);
 
-    const blueLight = new THREE.PointLight(0x0066ff, 15, 20);
-    blueLight.position.set(-4, 3, 4);
-    scene.add(blueLight);
+    // Cyan atmosphere accent light
+    const cyanRimLight = new THREE.PointLight(0x29d8ff, 6, 12);
+    cyanRimLight.position.set(3.5, -2, 3);
+    scene.add(cyanRimLight);
 
-    const cyanLight = new THREE.PointLight(0x00f0ff, 15, 20);
-    cyanLight.position.set(4, -3, 3);
-    scene.add(cyanLight);
-
-    const violetLight = new THREE.PointLight(0xa855f7, 12, 20);
-    violetLight.position.set(0, 4, -2);
-    scene.add(violetLight);
-
-    // Mouse Tracking with smooth Lerp
+    // Smooth Mouse Interaction Lerp
     let targetX = 0;
     let targetY = 0;
     let currentX = 0;
@@ -184,8 +217,8 @@ export default function HeroCanvas3D() {
       const rect = container.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
-      targetX = x * 1.5;
-      targetY = y * 1.5;
+      targetX = x * 0.9;
+      targetY = y * 0.9;
     };
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
@@ -203,39 +236,34 @@ export default function HeroCanvas3D() {
     window.addEventListener("resize", handleResize);
 
     // Animation Loop
-    let clock = new THREE.Clock();
+    const clock = new THREE.Clock();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
       const elapsedTime = clock.getElapsedTime();
 
-      // Smooth mouse follow
-      currentX += (targetX - currentX) * 0.05;
-      currentY += (targetY - currentY) * 0.05;
+      // Smooth interactive mouse follow
+      currentX += (targetX - currentX) * 0.04;
+      currentY += (targetY - currentY) * 0.04;
 
-      // Group rotation (auto + mouse lerp)
-      mainGroup.rotation.y = elapsedTime * 0.25 + currentX;
-      mainGroup.rotation.x = Math.sin(elapsedTime * 0.2) * 0.15 + currentY;
+      earthMasterGroup.rotation.y = currentX * 0.6;
+      earthMasterGroup.rotation.x = currentY * 0.4;
 
-      // Individual object internal movements
-      coreMesh.rotation.y = elapsedTime * -0.3;
-      coreMesh.rotation.z = Math.sin(elapsedTime * 0.5) * 0.2;
+      // Continuous Earth planetary rotation on its axial tilt
+      earthMesh.rotation.y = elapsedTime * 0.08;
 
-      cageMesh.rotation.y = elapsedTime * 0.4;
-      cageMesh.rotation.x = elapsedTime * 0.2;
+      // Cloud layer independent atmospheric drift
+      cloudMesh.rotation.y = elapsedTime * 0.105;
 
-      ring1.rotation.z = elapsedTime * 0.35;
-      ring2.rotation.z = -elapsedTime * 0.3;
+      // Digital Network Rings rotation
+      ring1.rotation.z = elapsedTime * 0.15;
+      ring2.rotation.z = -elapsedTime * 0.12;
 
-      nodeGroup.rotation.y = elapsedTime * -0.5;
+      // Satellites orbital motion
+      satelliteGroup.rotation.y = elapsedTime * -0.25;
 
-      // Subtle particle float
-      particleSystem.rotation.y = elapsedTime * 0.03;
-      particleSystem.rotation.x = Math.sin(elapsedTime * 0.02) * 0.1;
-
-      // Pulsing lights
-      blueLight.intensity = 12 + Math.sin(elapsedTime * 2) * 3;
-      cyanLight.intensity = 12 + Math.cos(elapsedTime * 2) * 3;
+      // Subtle starfield twinkling
+      starSystem.rotation.y = elapsedTime * 0.015;
 
       renderer.render(scene, camera);
     };
@@ -253,18 +281,24 @@ export default function HeroCanvas3D() {
       }
 
       // Dispose Three.js objects
-      coreGeometry.dispose();
-      coreMaterial.dispose();
-      cageGeometry.dispose();
-      cageMaterial.dispose();
-      ringGeo1.dispose();
-      ringMat1.dispose();
-      ringGeo2.dispose();
-      ringMat2.dispose();
-      nodeGeometry.dispose();
-      nodeMaterial.dispose();
-      particleGeometry.dispose();
-      particleMaterial.dispose();
+      earthGeometry.dispose();
+      earthMaterial.dispose();
+      cloudGeometry.dispose();
+      cloudMaterial.dispose();
+      atmosphereGeometry.dispose();
+      atmosphereMaterial.dispose();
+      networkRingGeo1.dispose();
+      networkRingMat1.dispose();
+      networkRingGeo2.dispose();
+      networkRingMat2.dispose();
+      satelliteGeo.dispose();
+      satelliteMat.dispose();
+      starGeometry.dispose();
+      starMaterial.dispose();
+      earthDayMap.dispose();
+      earthNormalMap.dispose();
+      earthSpecMap.dispose();
+      earthCloudMap.dispose();
       renderer.dispose();
     };
   }, []);
@@ -272,7 +306,7 @@ export default function HeroCanvas3D() {
   return (
     <div
       ref={mountRef}
-      className="absolute inset-0 pointer-events-none z-0 overflow-hidden flex items-center justify-center opacity-85"
+      className="absolute inset-0 pointer-events-none z-0 overflow-hidden flex items-center justify-center opacity-90"
       aria-hidden="true"
     />
   );
