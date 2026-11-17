@@ -56,8 +56,12 @@ export const metadata: Metadata = {
     creator: "@DevSyntix",
   },
   icons: {
-    icon: "/brand/logo-icon.jpg",
-    apple: "/brand/logo-icon.jpg",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/brand/logo-icon.png", type: "image/png" },
+    ],
+    apple: "/brand/apple-touch-icon.png",
+    shortcut: "/favicon.ico",
   },
 };
 

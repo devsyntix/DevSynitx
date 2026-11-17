@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 interface BrandLogoProps {
   className?: string;
@@ -28,55 +29,14 @@ export default function BrandLogo({
         {/* Specular corner glint */}
         <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
 
-        <svg
-          viewBox="0 0 100 100"
-          className="w-full h-full drop-shadow-[0_2px_8px_rgba(41,216,255,0.5)]"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <defs>
-            <linearGradient id="appleBlueRibbon" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#0071E3" />
-              <stop offset="60%" stopColor="#29D8FF" />
-              <stop offset="100%" stopColor="#5856D6" />
-            </linearGradient>
-            <linearGradient id="appleCyanRibbon" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#29D8FF" />
-              <stop offset="100%" stopColor="#0071E3" />
-            </linearGradient>
-            <linearGradient id="appleDarkFold" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#0A2540" />
-              <stop offset="100%" stopColor="#00122A" />
-            </linearGradient>
-          </defs>
-
-          {/* Top back fold */}
-          <path
-            d="M20 34 L72 14 L80 32 L28 52 Z"
-            fill="url(#appleBlueRibbon)"
-          />
-          {/* Top front upright panel */}
-          <path
-            d="M48 24 L78 35 L78 62 L48 51 Z"
-            fill="url(#appleCyanRibbon)"
-            opacity="0.95"
-          />
-          {/* Left upright front panel */}
-          <path
-            d="M18 35 L48 46 L48 73 L18 62 Z"
-            fill="url(#appleCyanRibbon)"
-          />
-          {/* Bottom back fold */}
-          <path
-            d="M24 64 L76 44 L84 62 L32 82 Z"
-            fill="url(#appleDarkFold)"
-          />
-          {/* Bottom horizontal fold bar */}
-          <path
-            d="M24 64 L78 64 L78 80 L24 80 Z"
-            fill="url(#appleBlueRibbon)"
-          />
-        </svg>
+        <Image
+          src="/brand/logo.png"
+          alt="DevSyntix Logo"
+          width={iconDimensions.width * 2}
+          height={iconDimensions.height * 2}
+          className="w-full h-full object-contain drop-shadow-[0_2px_10px_rgba(41,216,255,0.5)]"
+          priority
+        />
       </div>
 
       {/* Apple SF Pro Wordmark */}
