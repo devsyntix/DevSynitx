@@ -1,0 +1,212 @@
+import {
+  Code2,
+  Globe,
+  Layers,
+  Smartphone,
+  Palette,
+  Cloud,
+  Bot,
+  Plug,
+  Lightbulb,
+  Building2,
+  Cpu,
+  Users,
+  Shield,
+  Zap,
+} from "lucide-react";
+
+export const siteConfig = {
+  name: "DevSyntix",
+  tagline: "Building Digital Experiences. Engineering Tomorrow.",
+  description:
+    "We craft premium digital solutions that transform ideas into powerful, scalable, and beautifully designed software products. From concept to deployment, we engineer the future.",
+  url: "https://devsyntix.com",
+
+  contact: {
+    email: "hello@devsyntix.com",
+    phone: "+1 (555) 123-4567",
+    location: "San Francisco, CA",
+  },
+
+  social: {
+    instagram: "#",
+    twitter: "#",
+    threads: "#",
+    linkedin: "#",
+  },
+
+  navLinks: [
+    { label: "Home", href: "#home" },
+    { label: "About", href: "#about" },
+    { label: "Services", href: "#services" },
+    { label: "Technologies", href: "#technologies" },
+    { label: "Projects", href: "#projects" },
+    { label: "Contact", href: "#contact" },
+  ],
+
+  services: [
+    {
+      title: "Custom Software Development",
+      description:
+        "Tailored software solutions designed to solve your unique business challenges and drive operational efficiency at scale.",
+      icon: Code2,
+    },
+    {
+      title: "Web Application Development",
+      description:
+        "High-performance, responsive web applications built with modern frameworks that deliver exceptional user experiences.",
+      icon: Globe,
+    },
+    {
+      title: "SaaS Product Development",
+      description:
+        "End-to-end SaaS product engineering — from architecture and MVP to multi-tenant platforms ready for market launch.",
+      icon: Layers,
+    },
+    {
+      title: "Mobile Application Development",
+      description:
+        "Native and cross-platform mobile apps crafted for iOS and Android with fluid interfaces and robust performance.",
+      icon: Smartphone,
+    },
+    {
+      title: "UI/UX Design",
+      description:
+        "Research-driven design systems and intuitive interfaces that elevate brand identity and maximize user engagement.",
+      icon: Palette,
+    },
+    {
+      title: "Cloud Solutions & Integration",
+      description:
+        "Seamless cloud migration, infrastructure optimization, and integration strategies across AWS, GCP, and Azure.",
+      icon: Cloud,
+    },
+    {
+      title: "AI & Automation",
+      description:
+        "Intelligent automation pipelines and AI-powered features that streamline workflows and unlock actionable insights.",
+      icon: Bot,
+    },
+    {
+      title: "API Development & Integration",
+      description:
+        "Robust, well-documented RESTful and GraphQL APIs that connect systems and enable seamless data exchange.",
+      icon: Plug,
+    },
+  ],
+
+  technologies: {
+    frontend: [
+      { name: "React", icon: "/tech/react.svg" },
+      { name: "Next.js", icon: "/tech/nextjs.svg" },
+      { name: "TypeScript", icon: "/tech/typescript.svg" },
+      { name: "Tailwind CSS", icon: "/tech/tailwind.svg" },
+      { name: "Vue.js", icon: "/tech/vue.svg" },
+      { name: "Angular", icon: "/tech/angular.svg" },
+    ],
+    backend: [
+      { name: "Node.js", icon: "/tech/nodejs.svg" },
+      { name: "Python", icon: "/tech/python.svg" },
+      { name: "Go", icon: "/tech/go.svg" },
+      { name: "Rust", icon: "/tech/rust.svg" },
+      { name: "Java", icon: "/tech/java.svg" },
+      { name: "GraphQL", icon: "/tech/graphql.svg" },
+    ],
+    database: [
+      { name: "PostgreSQL", icon: "/tech/postgresql.svg" },
+      { name: "MongoDB", icon: "/tech/mongodb.svg" },
+      { name: "Redis", icon: "/tech/redis.svg" },
+      { name: "MySQL", icon: "/tech/mysql.svg" },
+      { name: "Supabase", icon: "/tech/supabase.svg" },
+      { name: "Firebase", icon: "/tech/firebase.svg" },
+    ],
+    cloudDevOps: [
+      { name: "AWS", icon: "/tech/aws.svg" },
+      { name: "Google Cloud", icon: "/tech/gcp.svg" },
+      { name: "Docker", icon: "/tech/docker.svg" },
+      { name: "Kubernetes", icon: "/tech/kubernetes.svg" },
+      { name: "Vercel", icon: "/tech/vercel.svg" },
+      { name: "GitHub Actions", icon: "/tech/github.svg" },
+    ],
+  },
+
+  whyChooseUs: [
+    {
+      title: "Innovation First",
+      description:
+        "We embrace cutting-edge technologies and creative problem-solving to deliver solutions that set you apart from the competition.",
+      icon: Lightbulb,
+    },
+    {
+      title: "Scalable Architecture",
+      description:
+        "Every system we build is designed to grow with your business — handling millions of users without breaking a sweat.",
+      icon: Building2,
+    },
+    {
+      title: "Modern Technologies",
+      description:
+        "We leverage the latest frameworks, languages, and tools to ensure your product stays ahead of the technology curve.",
+      icon: Cpu,
+    },
+    {
+      title: "User-Centric Design",
+      description:
+        "Our design philosophy puts users first, creating interfaces that are intuitive, accessible, and delightful to use.",
+      icon: Users,
+    },
+    {
+      title: "Reliable Solutions",
+      description:
+        "Battle-tested code, comprehensive testing, and robust CI/CD pipelines ensure your product runs flawlessly 24/7.",
+      icon: Shield,
+    },
+    {
+      title: "Performance Driven",
+      description:
+        "Optimized for speed, efficiency, and responsiveness — because every millisecond counts in the digital experience.",
+      icon: Zap,
+    },
+  ],
+
+  projects: [
+    {
+      title: "NexaPay — Fintech Dashboard",
+      description:
+        "A comprehensive fintech dashboard with real-time analytics, transaction monitoring, and AI-powered fraud detection for a next-gen payment platform.",
+      image: "/projects/nexapay.jpg",
+      tags: ["Next.js", "TypeScript", "PostgreSQL", "Stripe", "AWS"],
+      category: "Fintech",
+      link: "#",
+    },
+    {
+      title: "MediCore — Healthcare Platform",
+      description:
+        "HIPAA-compliant telemedicine platform enabling virtual consultations, electronic health records, and intelligent appointment scheduling.",
+      image: "/projects/medicore.jpg",
+      tags: ["React", "Node.js", "MongoDB", "WebRTC", "GCP"],
+      category: "Healthcare",
+      link: "#",
+    },
+    {
+      title: "EduVerse — E-Learning Ecosystem",
+      description:
+        "An immersive e-learning platform featuring interactive courses, live sessions, progress tracking, and AI-driven personalized learning paths.",
+      image: "/projects/eduverse.jpg",
+      tags: ["Vue.js", "Python", "Redis", "Docker", "Kubernetes"],
+      category: "EdTech",
+      link: "#",
+    },
+    {
+      title: "LogiFlow — Supply Chain SaaS",
+      description:
+        "End-to-end supply chain management SaaS with real-time inventory tracking, predictive analytics, and automated logistics optimization.",
+      image: "/projects/logiflow.jpg",
+      tags: ["Next.js", "Go", "PostgreSQL", "Kafka", "Azure"],
+      category: "Logistics",
+      link: "#",
+    },
+  ],
+} as const;
+
+export type SiteConfig = typeof siteConfig;
