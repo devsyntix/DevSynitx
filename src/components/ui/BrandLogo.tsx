@@ -13,10 +13,10 @@ export default function BrandLogo({
   showWordmark = true,
 }: BrandLogoProps) {
   const iconDimensions = {
-    sm: { width: 34, height: 34, wordmarkHeight: 20 },
-    md: { width: 42, height: 42, wordmarkHeight: 24 },
-    lg: { width: 50, height: 50, wordmarkHeight: 30 },
-    xl: { width: 64, height: 64, wordmarkHeight: 38 },
+    sm: { width: 30, height: 30, wordmarkHeight: 14 },
+    md: { width: 36, height: 36, wordmarkHeight: 17 },
+    lg: { width: 44, height: 44, wordmarkHeight: 22 },
+    xl: { width: 54, height: 54, wordmarkHeight: 28 },
   }[size];
 
   return (
