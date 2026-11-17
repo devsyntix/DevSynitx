@@ -13,10 +13,10 @@ export default function BrandLogo({
   showWordmark = true,
 }: BrandLogoProps) {
   const iconDimensions = {
-    sm: { width: 34, height: 34, wordmarkHeight: 18 },
-    md: { width: 42, height: 42, wordmarkHeight: 22 },
-    lg: { width: 50, height: 50, wordmarkHeight: 26 },
-    xl: { width: 64, height: 64, wordmarkHeight: 32 },
+    sm: { width: 34, height: 34, wordmarkHeight: 20 },
+    md: { width: 42, height: 42, wordmarkHeight: 24 },
+    lg: { width: 50, height: 50, wordmarkHeight: 30 },
+    xl: { width: 64, height: 64, wordmarkHeight: 38 },
   }[size];
 
   return (
@@ -39,16 +39,16 @@ export default function BrandLogo({
         />
       </div>
 
-      {/* Official DEVSYNTIX Wordmark with Cyan Brand Accent */}
+      {/* Official DEVSYNTIX 3D Wordmark with Electric Blue Accent */}
       {showWordmark && (
         <div className="flex items-center">
           <Image
             src="/brand/wordmark-white.png"
             alt="DevSyntix"
-            width={334}
-            height={52}
+            width={790}
+            height={101}
             style={{ height: `${iconDimensions.wordmarkHeight}px`, width: "auto" }}
-            className="object-contain filter drop-shadow-[0_2px_8px_rgba(41,216,255,0.3)] transition-transform duration-200 group-hover:brightness-110"
+            className="object-contain filter drop-shadow-[0_2px_10px_rgba(0,114,255,0.35)] transition-transform duration-200 group-hover:brightness-110"
             priority
           />
         </div>
