@@ -101,9 +101,6 @@ export default function Navbar() {
                   }`}
                 >
                   {link.label}
-                  {isActive && (
-                    <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#29d8ff] shadow-[0_0_8px_#29d8ff]" />
-                  )}
                 </a>
               );
             })}
