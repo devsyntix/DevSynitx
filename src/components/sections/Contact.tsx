@@ -16,29 +16,17 @@ import SectionHeading from "@/components/ui/SectionHeading";
 interface FormData {
   fullName: string;
   email: string;
+  phone: string;
   company: string;
-  projectType: string;
   message: string;
 }
-
-const projectTypes = [
-  "Custom Software Development",
-  "Web Application Development",
-  "SaaS Product Development",
-  "Mobile Application Development",
-  "UI/UX Design & Architecture",
-  "Cloud Solutions & DevOps",
-  "AI & Intelligent Automation",
-  "API Development & Integration",
-  "Other Technology Inquiry",
-];
 
 export default function Contact() {
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
     email: "",
+    phone: "+91 ",
     company: "",
-    projectType: "",
     message: "",
   });
 
@@ -197,8 +185,8 @@ export default function Contact() {
                         setFormData({
                           fullName: "",
                           email: "",
+                          phone: "+91 ",
                           company: "",
-                          projectType: "",
                           message: "",
                         });
                       }}
@@ -288,35 +276,24 @@ export default function Contact() {
                       />
                     </div>
 
-                    {/* Project Type */}
+                    {/* Phone Number */}
                     <div>
                       <label
-                        htmlFor="projectType"
+                        htmlFor="phone"
                         className="block text-xs font-semibold tracking-tight text-[#86868b] mb-2"
                       >
-                        Project Type <span className="text-[#29d8ff]">*</span>
+                        Phone Number <span className="text-[#29d8ff]">*</span>
                       </label>
-                      <select
-                        id="projectType"
-                        name="projectType"
-                        value={formData.projectType}
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
                         onChange={handleChange}
+                        placeholder="+91 98765 43210"
                         required
-                        className={`${inputClasses} appearance-none cursor-pointer`}
-                      >
-                        <option value="" disabled className="bg-[#121218] text-[#86868b]">
-                          Select Focus Area
-                        </option>
-                        {projectTypes.map((type) => (
-                          <option
-                            key={type}
-                            value={type}
-                            className="bg-[#121218] text-white"
-                          >
-                            {type}
-                          </option>
-                        ))}
-                      </select>
+                        className={inputClasses}
+                      />
                     </div>
                   </div>
 

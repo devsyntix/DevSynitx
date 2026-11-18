@@ -12,11 +12,11 @@ export async function POST(request: Request) {
       );
     }
 
-    const { fullName, email, company, projectType, message } = body || {};
+    const { fullName, email, phone, company, message } = body || {};
 
-    if (!fullName || !email || !message) {
+    if (!fullName || !email || !phone || !message) {
       return NextResponse.json(
-        { error: "Please provide Full Name, Email, and Message." },
+        { error: "Please provide Full Name, Email, Phone Number, and Message." },
         { status: 400 }
       );
     }
@@ -79,8 +79,10 @@ export async function POST(request: Request) {
             <td style="padding: 8px 0; color: #ffffff; font-size: 15px;">${company || "Not provided"}</td>
           </tr>
           <tr>
-            <td style="padding: 8px 0; color: #86868b; font-size: 13px;">Project Type:</td>
-            <td style="padding: 8px 0; color: #af52de; font-weight: 600; font-size: 15px;">${projectType || "General Inquiry"}</td>
+            <td style="padding: 8px 0; color: #86868b; font-size: 13px;">Phone Number:</td>
+            <td style="padding: 8px 0; color: #29d8ff; font-weight: 600; font-size: 15px;">
+              <a href="tel:${(phone || '').replace(/[^0-9+]/g, '')}" style="color: #29d8ff; text-decoration: none;">${phone}</a>
+            </td>
           </tr>
         </table>
 
@@ -110,7 +112,7 @@ export async function POST(request: Request) {
         from: senderFrom,
         to: [finalRecipient],
         reply_to: email,
-        subject: `🚀 New DevSyntix Inquiry from ${fullName} (${projectType || "General"})`,
+        subject: `🚀 New DevSyntix Inquiry from ${fullName} (${phone || email})`,
         html: emailHtml,
       }),
     });
@@ -142,7 +144,7 @@ export async function POST(request: Request) {
             from: senderFrom,
             to: [finalRecipient],
             reply_to: email,
-            subject: `🚀 New DevSyntix Inquiry from ${fullName} (${projectType || "General"})`,
+            subject: `🚀 New DevSyntix Inquiry from ${fullName} (${phone || email})`,
             html: emailHtml,
           }),
         });
