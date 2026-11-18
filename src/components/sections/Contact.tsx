@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, type FormEvent, type ChangeEvent } from "react";
-import { Mail, Phone, Send, CheckCircle2, Sparkles } from "lucide-react";
+import { Mail, Phone, Send, CheckCircle2, Sparkles, ExternalLink } from "lucide-react";
 import confetti from "canvas-confetti";
 import {
   InstagramIcon,
@@ -51,51 +51,49 @@ export default function Contact() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const subject = `🚀 DevSyntix Project Inquiry: ${formData.projectType || "General"} — ${formData.fullName}`;
+  const bodyText = `Hello DevSyntix Team,\n\nI would like to inquire about a project.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nPROJECT SPECIFICATIONS\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n• Full Name: ${formData.fullName}\n• Email: ${formData.email}\n• Company: ${formData.company || "N/A"}\n• Capability: ${formData.projectType || "General Inquiry"}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nPROJECT DETAILS & REQUIREMENTS\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n${formData.message}\n\nBest regards,\n${formData.fullName}`;
+
+  const mailtoUrl = `mailto:Devsyntix@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+  const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=Devsyntix@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitError(null);
 
+    // 1. Silent background attempt to server API (Resend / SMTP)
     try {
-      const res = await fetch("/api/contact", {
+      fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+      }).catch(() => {});
+    } catch {
+      // Ignore background fetch error
+    }
+
+    // 2. Open client email window automatically
+    try {
+      window.location.href = mailtoUrl;
+    } catch {
+      // Ignore location error
+    }
+
+    setIsSubmitting(false);
+    setIsSubmitted(true);
+
+    try {
+      confetti({
+        particleCount: 90,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ["#29D8FF", "#AF52DE", "#0071E3", "#FFFFFF"],
       });
-
-      const text = await res.text();
-      let data: any = null;
-      try {
-        data = JSON.parse(text);
-      } catch {
-        // Safe catch: prevents "Unexpected token '<', '<!DOCTYPE '..." crash
-      }
-
-      if (!res.ok || (data && data.error)) {
-        throw new Error(data?.error || "We could not deliver your message automatically.");
-      }
-
-      setIsSubmitted(true);
-
-      try {
-        confetti({
-          particleCount: 90,
-          spread: 80,
-          origin: { y: 0.6 },
-          colors: ["#29D8FF", "#AF52DE", "#0071E3", "#FFFFFF"],
-        });
-      } catch {
-        // Ignore if confetti blocked
-      }
-    } catch (err: any) {
-      console.error("Submission error:", err);
-      setSubmitError(
-        err?.message || "There was an issue sending your message. Please reach out directly to Devsyntix@gmail.com."
-      );
-    } finally {
-      setIsSubmitting(false);
+    } catch {
+      // Ignore if confetti blocked
     }
   };
 
@@ -160,37 +158,61 @@ export default function Contact() {
               <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
 
               {isSubmitted ? (
-                <div className="py-12 text-center space-y-5">
+                <div className="py-10 text-center space-y-6">
                   <div className="w-16 h-16 rounded-3xl bg-[#29d8ff]/15 border border-[#29d8ff]/30 flex items-center justify-center mx-auto text-[#29d8ff] shadow-[0_0_35px_rgba(41,216,255,0.35)]">
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
-                  <h3 className="text-2xl font-bold tracking-tight text-white">
-                    Inquiry Sent Successfully
-                  </h3>
-                  <p className="text-[#86868b] text-sm max-w-md mx-auto leading-relaxed">
-                    Thank you,{" "}
-                    <strong className="text-white">{formData.fullName}</strong>.
-                    Your message has been delivered directly to{" "}
-                    <span className="text-white font-medium">Devsyntix@gmail.com</span>.
-                    Our engineering team will review your project requirements and connect with you shortly at{" "}
-                    <span className="text-[#29d8ff]">{formData.email}</span>.
-                  </p>
-                  <button
-                    onClick={() => {
-                      setIsSubmitted(false);
-                      setSubmitError(null);
-                      setFormData({
-                        fullName: "",
-                        email: "",
-                        company: "",
-                        projectType: "",
-                        message: "",
-                      });
-                    }}
-                    className="ios-btn px-6 py-2.5 rounded-full text-xs font-semibold tracking-tight text-white/80 bg-white/[0.08] border border-white/15 hover:bg-white/[0.14] transition-all"
-                  >
-                    Submit Another Inquiry
-                  </button>
+                  <div className="space-y-2">
+                    <h3 className="text-2xl font-bold tracking-tight text-white">
+                      Inquiry Ready to Deliver!
+                    </h3>
+                    <p className="text-[#86868b] text-sm max-w-md mx-auto leading-relaxed">
+                      Thank you, <strong className="text-white">{formData.fullName}</strong>.
+                      Your inquiry has been formatted for{" "}
+                      <span className="text-white font-medium">Devsyntix@gmail.com</span>.
+                      Click below to confirm and dispatch via your preferred mail client:
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto">
+                    <a
+                      href={gmailComposeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="apple-intelligence-glow ios-btn flex-1 w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full font-semibold text-xs tracking-tight text-white bg-gradient-to-r from-[#0071e3] to-[#af52de] shadow-lg shadow-blue-500/25 hover:opacity-95 transition-opacity"
+                    >
+                      <Mail className="w-4 h-4 text-[#29d8ff]" />
+                      <span>Send via Gmail Web</span>
+                      <ExternalLink className="w-3.5 h-3.5 text-white/70" />
+                    </a>
+
+                    <a
+                      href={mailtoUrl}
+                      className="ios-btn flex-1 w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full font-semibold text-xs tracking-tight text-white/90 bg-white/[0.08] border border-white/20 hover:bg-white/[0.14] transition-all"
+                    >
+                      <Send className="w-3.5 h-3.5 text-[#29d8ff]" />
+                      <span>Open in Mail App</span>
+                    </a>
+                  </div>
+
+                  <div className="pt-2">
+                    <button
+                      onClick={() => {
+                        setIsSubmitted(false);
+                        setSubmitError(null);
+                        setFormData({
+                          fullName: "",
+                          email: "",
+                          company: "",
+                          projectType: "",
+                          message: "",
+                        });
+                      }}
+                      className="text-xs font-semibold text-[#86868b] hover:text-white transition-colors"
+                    >
+                      &larr; Submit Another Inquiry
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
