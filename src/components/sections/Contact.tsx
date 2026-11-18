@@ -65,10 +65,16 @@ export default function Contact() {
         body: JSON.stringify(formData),
       });
 
-      const data = await res.json();
+      const text = await res.text();
+      let data: any = null;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        // Safe catch: prevents "Unexpected token '<', '<!DOCTYPE '..." crash
+      }
 
-      if (!res.ok) {
-        throw new Error(data.error || "Failed to deliver message. Please try again.");
+      if (!res.ok || (data && data.error)) {
+        throw new Error(data?.error || "We could not deliver your message automatically.");
       }
 
       setIsSubmitted(true);
@@ -86,7 +92,7 @@ export default function Contact() {
     } catch (err: any) {
       console.error("Submission error:", err);
       setSubmitError(
-        err?.message || "There was an error sending your message. Please reach out directly to Devsyntix@gmail.com."
+        err?.message || "There was an issue sending your message. Please reach out directly to Devsyntix@gmail.com."
       );
     } finally {
       setIsSubmitting(false);
@@ -189,8 +195,17 @@ export default function Contact() {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
                   {submitError && (
-                    <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs leading-relaxed">
-                      {submitError}
+                    <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-300 text-xs leading-relaxed space-y-2">
+                      <p>{submitError}</p>
+                      <a
+                        href={`mailto:Devsyntix@gmail.com?subject=${encodeURIComponent(`Project Inquiry — ${formData.fullName || "Client"}`)}&body=${encodeURIComponent(
+                          `Name: ${formData.fullName}\nEmail: ${formData.email}\nCompany: ${formData.company || "N/A"}\nProject: ${formData.projectType || "General"}\n\nMessage:\n${formData.message}`
+                        )}`}
+                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-[11px] transition-colors"
+                      >
+                        <Mail className="w-3.5 h-3.5 text-[#29d8ff]" />
+                        <span>Send directly to Devsyntix@gmail.com</span>
+                      </a>
                     </div>
                   )}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">

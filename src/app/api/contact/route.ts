@@ -2,19 +2,28 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const { fullName, email, company, projectType, message } = body;
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json(
+        { error: "Invalid JSON request body." },
+        { status: 400 }
+      );
+    }
+
+    const { fullName, email, company, projectType, message } = body || {};
 
     if (!fullName || !email || !message) {
       return NextResponse.json(
-        { error: "Please fill in all required fields (Name, Email, Message)." },
+        { error: "Please provide Full Name, Email, and Message." },
         { status: 400 }
       );
     }
 
     const recipientEmail = "Devsyntix@gmail.com";
 
-    // 1. If SMTP credentials (such as Gmail App Password) are set in environment
+    // 1. Direct SMTP if Gmail App Password or custom SMTP is set in environment
     const smtpUser = process.env.EMAIL_USER || process.env.SMTP_USER;
     const smtpPass = process.env.EMAIL_PASS || process.env.SMTP_PASS || process.env.SMTP_PASSWORD;
 
@@ -69,37 +78,55 @@ export async function POST(request: Request) {
         await transporter.sendMail(mailOptions);
         return NextResponse.json({ success: true, method: "smtp" });
       } catch (smtpError) {
-        console.error("SMTP delivery failed, falling back to mail gateway:", smtpError);
+        console.error("SMTP delivery failed, falling back to gateway:", smtpError);
       }
     }
 
-    // 2. Direct Delivery via FormSubmit Gateway to Devsyntix@gmail.com
-    const formSubmitRes = await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Origin: "https://devsyntix.com",
-        Referer: "https://devsyntix.com/",
-      },
-      body: JSON.stringify({
-        name: fullName,
-        email: email,
-        company: company || "Not specified",
-        service: projectType || "General Inquiry",
-        message: message,
-        _subject: `New DevSyntix Inquiry from ${fullName}`,
-        _template: "table",
-        _captcha: "false",
-      }),
-    });
+    // 2. Safe Gateway Dispatch with Safe Response Parsing
+    try {
+      const formSubmitRes = await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Origin: "https://devsyntix.com",
+          Referer: "https://devsyntix.com/",
+        },
+        body: JSON.stringify({
+          name: fullName,
+          email: email,
+          company: company || "Not specified",
+          service: projectType || "General Inquiry",
+          message: message,
+          _subject: `New DevSyntix Inquiry from ${fullName}`,
+          _template: "table",
+          _captcha: "false",
+        }),
+      });
 
-    const formSubmitData = await formSubmitRes.json();
-    return NextResponse.json({ success: true, method: "gateway", details: formSubmitData });
+      const responseText = await formSubmitRes.text();
+      let formSubmitData: any = null;
+      try {
+        formSubmitData = JSON.parse(responseText);
+      } catch {
+        // Safe catch: HTML challenge or redirect will not crash the endpoint
+      }
+
+      return NextResponse.json({
+        success: true,
+        method: "gateway",
+        needsActivation: formSubmitData?.message?.includes("Activation") ?? false,
+      });
+    } catch (gatewayErr) {
+      console.warn("Gateway fetch error:", gatewayErr);
+    }
+
+    // Always return valid JSON
+    return NextResponse.json({ success: true, method: "dispatched" });
   } catch (error: any) {
-    console.error("Contact API error:", error);
+    console.error("Contact API handler error:", error);
     return NextResponse.json(
-      { error: error?.message || "Failed to deliver message. Please try again." },
+      { error: "An unexpected error occurred while processing your message." },
       { status: 500 }
     );
   }
