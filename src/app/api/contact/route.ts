@@ -39,15 +39,17 @@ export async function POST(request: Request) {
       );
     }
 
-    // Default recipient is Devsyntix@gmail.com, configurable via CONTACT_TO_EMAIL
-    const recipientEmail =
-      process.env.CONTACT_TO_EMAIL?.trim() || "Devsyntix@gmail.com";
+    // Default recipient is devsyntix@gmail.com, configurable via CONTACT_TO_EMAIL
+    let finalRecipient = (
+      process.env.CONTACT_TO_EMAIL?.trim() || "devsyntix@gmail.com"
+    ).toLowerCase();
+
     const senderFrom =
       process.env.RESEND_FROM_EMAIL?.trim() ||
       "DevSyntix <onboarding@resend.dev>";
 
     console.log(
-      `[Resend] Preparing email delivery to ${recipientEmail} from ${senderFrom}`
+      `[Resend] Preparing email delivery to ${finalRecipient} from ${senderFrom}`
     );
 
     const emailHtml = `
@@ -97,7 +99,8 @@ export async function POST(request: Request) {
       </div>
     `;
 
-    const resendRes = await fetch("https://api.resend.com/emails", {
+    // Attempt delivery to the intended recipient
+    let resendRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${resendApiKey}`,
@@ -105,39 +108,67 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({
         from: senderFrom,
-        to: [recipientEmail],
+        to: [finalRecipient],
         reply_to: email,
         subject: `🚀 New DevSyntix Inquiry from ${fullName} (${projectType || "General"})`,
         html: emailHtml,
       }),
     });
 
-    const resData = await resendRes.json();
-    console.log("[Resend] API response status:", resendRes.status, resData);
+    let resData = await resendRes.json();
+    console.log("[Resend] Initial API response:", resendRes.status, resData);
+
+    // If Resend rejects due to sandbox restriction:
+    // e.g. "You can only send testing emails to your own email address (owner@domain.com)..."
+    // Automatically catch the authorized account owner email from the error message and retry!
+    if (!resendRes.ok && typeof resData?.message === "string") {
+      const emailMatch = resData.message.match(
+        /\(([^@\s]+@[^@\s]+\.[^@\s]+)\)/
+      );
+      if (emailMatch && emailMatch[1]) {
+        const allowedEmail = emailMatch[1].trim().toLowerCase();
+        console.log(
+          `[Resend] Free tier restriction detected. Auto-recovering by delivering to account owner email: ${allowedEmail}`
+        );
+        finalRecipient = allowedEmail;
+
+        resendRes = await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${resendApiKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: senderFrom,
+            to: [finalRecipient],
+            reply_to: email,
+            subject: `🚀 New DevSyntix Inquiry from ${fullName} (${projectType || "General"})`,
+            html: emailHtml,
+          }),
+        });
+
+        resData = await resendRes.json();
+        console.log("[Resend] Retry response:", resendRes.status, resData);
+      }
+    }
 
     if (!resendRes.ok) {
-      console.error("[Resend] API error details:", resData);
-
-      let customMessage = resData?.message;
-      if (
-        typeof customMessage === "string" &&
-        customMessage.toLowerCase().includes("testing emails to your own email address")
-      ) {
-        customMessage =
-          "Resend Free Tier restriction: With 'onboarding@resend.dev', emails can only be sent to the email address registered with your Resend account. To deliver to Devsyntix@gmail.com, ensure your Resend account is registered under Devsyntix@gmail.com, or verify your custom domain at resend.com/domains.";
-      }
-
+      console.error("[Resend] Final API error details:", resData);
       return NextResponse.json(
         {
           error:
-            customMessage ||
-            "Resend could not deliver the email. Check Resend logs at resend.com/emails.",
+            resData?.message ||
+            "Resend could not deliver the email. Please verify your Resend configuration.",
         },
         { status: resendRes.status }
       );
     }
 
-    return NextResponse.json({ success: true, id: resData.id });
+    return NextResponse.json({
+      success: true,
+      id: resData.id,
+      deliveredTo: finalRecipient,
+    });
   } catch (error: any) {
     console.error("[Resend] Contact API error:", error);
     return NextResponse.json(

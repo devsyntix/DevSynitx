@@ -43,6 +43,7 @@ export default function Contact() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [deliveredTo, setDeliveredTo] = useState<string>("Devsyntix@gmail.com");
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleChange = (
@@ -79,6 +80,9 @@ export default function Contact() {
         );
       }
 
+      if (data?.deliveredTo) {
+        setDeliveredTo(data.deliveredTo);
+      }
       setIsSubmitted(true);
 
       try {
@@ -173,7 +177,7 @@ export default function Contact() {
                     <p className="text-[#86868b] text-sm max-w-md mx-auto leading-relaxed">
                       Thank you, <strong className="text-white">{formData.fullName}</strong>.
                       Your project inquiry has been transmitted to{" "}
-                      <span className="text-[#29d8ff] font-medium">Devsyntix@gmail.com</span>.
+                      <span className="text-[#29d8ff] font-medium">{deliveredTo}</span>.
                       Our engineering team will review your specifications and contact you shortly at{" "}
                       <span className="text-white font-medium">{formData.email}</span>.
                     </p>
@@ -204,8 +208,19 @@ export default function Contact() {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
                   {submitError && (
-                    <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-300 text-xs leading-relaxed">
-                      {submitError}
+                    <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-300 text-xs leading-relaxed space-y-2">
+                      <p>{submitError}</p>
+                      <p className="text-[11px] text-white/70">
+                        Need immediate assistance? You can also email us directly at{" "}
+                        <a
+                          href={`mailto:${siteConfig.contact.email}?subject=${encodeURIComponent(
+                            `Project Inquiry - ${formData.fullName || "DevSyntix"}`
+                          )}&body=${encodeURIComponent(formData.message || "")}`}
+                          className="text-[#29d8ff] underline underline-offset-2"
+                        >
+                          {siteConfig.contact.email}
+                        </a>
+                      </p>
                     </div>
                   )}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
