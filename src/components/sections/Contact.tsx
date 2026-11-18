@@ -5,6 +5,7 @@ import { Mail, Phone, Send, CheckCircle2, Sparkles } from "lucide-react";
 import confetti from "canvas-confetti";
 import {
   InstagramIcon,
+  FacebookIcon,
   XTwitterIcon,
   ThreadsIcon,
   LinkedInIcon,
@@ -110,6 +111,11 @@ export default function Contact() {
       name: "Instagram",
       icon: InstagramIcon,
       href: siteConfig.social.instagram,
+    },
+    {
+      name: "Facebook",
+      icon: FacebookIcon,
+      href: siteConfig.social.facebook,
     },
     {
       name: "X (Twitter)",

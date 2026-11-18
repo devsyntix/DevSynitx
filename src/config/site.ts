@@ -29,6 +29,7 @@ export const siteConfig = {
 
   social: {
     instagram: "https://www.instagram.com/devsyntix_/",
+    facebook: "https://www.facebook.com/profile.php?id=61596414960836",
     twitter: "https://x.com/DevSyntix",
     threads: "https://www.threads.com/@devsyntix_?hl=en",
     linkedin: "",

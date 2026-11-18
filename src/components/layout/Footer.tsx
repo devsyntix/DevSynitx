@@ -2,6 +2,7 @@ import React from "react";
 import BrandLogo from "@/components/ui/BrandLogo";
 import {
   InstagramIcon,
+  FacebookIcon,
   XTwitterIcon,
   ThreadsIcon,
   LinkedInIcon,
@@ -34,6 +35,11 @@ export default function Footer() {
       name: "Instagram",
       icon: InstagramIcon,
       href: siteConfig.social.instagram,
+    },
+    {
+      name: "Facebook",
+      icon: FacebookIcon,
+      href: siteConfig.social.facebook,
     },
     {
       name: "X (Twitter)",
