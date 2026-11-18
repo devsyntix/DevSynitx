@@ -187,9 +187,6 @@ export default function Contact() {
                       Our engineering team will review your specifications and contact you shortly at{" "}
                       <span className="text-white font-medium">{formData.email}</span>.
                     </p>
-                    <p className="text-xs text-[#86868b]/70 bg-white/[0.03] border border-white/10 rounded-xl p-3 max-w-md mx-auto">
-                      💡 <strong>Note:</strong> Automated notifications from Resend test domains may be routed to your <strong>Spam / Junk</strong> folder. Please check there if not visible in Primary.
-                    </p>
                   </div>
 
                   <div className="pt-4">
@@ -384,9 +381,6 @@ export default function Contact() {
                   </span>
                   <p className="text-base font-semibold tracking-tight text-white group-hover:text-[#29d8ff] transition-colors mt-0.5">
                     {siteConfig.contact.email}
-                  </p>
-                  <p className="text-xs text-[#86868b] mt-0.5">
-                    Guaranteed response under 4 hours
                   </p>
                 </div>
               </a>
