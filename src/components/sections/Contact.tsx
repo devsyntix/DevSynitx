@@ -317,7 +317,6 @@ export default function Contact() {
                           maxLength={10}
                           value={formData.phone}
                           onChange={handlePhoneChange}
-                          placeholder="9876543210"
                           required
                           className={`${inputClasses} pl-16 tracking-wider font-mono`}
                         />
