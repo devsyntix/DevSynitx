@@ -43,6 +43,7 @@ export default function Contact() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -53,21 +54,42 @@ export default function Contact() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    await new Promise((resolve) => setTimeout(resolve, 900));
-
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    setSubmitError(null);
 
     try {
-      confetti({
-        particleCount: 90,
-        spread: 80,
-        origin: { y: 0.6 },
-        colors: ["#29D8FF", "#AF52DE", "#0071E3", "#FFFFFF"],
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
-    } catch {
-      // Ignore if confetti blocked
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to deliver message. Please try again.");
+      }
+
+      setIsSubmitted(true);
+
+      try {
+        confetti({
+          particleCount: 90,
+          spread: 80,
+          origin: { y: 0.6 },
+          colors: ["#29D8FF", "#AF52DE", "#0071E3", "#FFFFFF"],
+        });
+      } catch {
+        // Ignore if confetti blocked
+      }
+    } catch (err: any) {
+      console.error("Submission error:", err);
+      setSubmitError(
+        err?.message || "There was an error sending your message. Please reach out directly to Devsyntix@gmail.com."
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -137,18 +159,20 @@ export default function Contact() {
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
                   <h3 className="text-2xl font-bold tracking-tight text-white">
-                    Inquiry Received
+                    Inquiry Sent Successfully
                   </h3>
                   <p className="text-[#86868b] text-sm max-w-md mx-auto leading-relaxed">
                     Thank you,{" "}
                     <strong className="text-white">{formData.fullName}</strong>.
-                    Our technical architecture team will review your project
-                    scope and connect at{" "}
+                    Your message has been delivered directly to{" "}
+                    <span className="text-white font-medium">Devsyntix@gmail.com</span>.
+                    Our engineering team will review your project requirements and connect with you shortly at{" "}
                     <span className="text-[#29d8ff]">{formData.email}</span>.
                   </p>
                   <button
                     onClick={() => {
                       setIsSubmitted(false);
+                      setSubmitError(null);
                       setFormData({
                         fullName: "",
                         email: "",
@@ -164,6 +188,11 @@ export default function Contact() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
+                  {submitError && (
+                    <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs leading-relaxed">
+                      {submitError}
+                    </div>
+                  )}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     {/* Full Name */}
                     <div>
