@@ -4,6 +4,7 @@ import Services from "@/components/sections/Services";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
 import TechStack from "@/components/sections/TechStack";
 import Projects from "@/components/sections/Projects";
+import FAQ from "@/components/sections/FAQ";
 import Contact from "@/components/sections/Contact";
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
       <WhyChooseUs />
       <TechStack />
       <Projects />
+      <FAQ />
       <Contact />
     </>
   );

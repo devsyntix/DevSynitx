@@ -10,6 +10,7 @@ const navLinks = [
   { label: "Services", href: "#services" },
   { label: "Tech", href: "#technologies" },
   { label: "Projects", href: "#projects" },
+  { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -22,7 +23,7 @@ export default function Navbar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 25);
 
-      const sections = ["home", "about", "services", "technologies", "projects", "contact"];
+      const sections = ["home", "about", "services", "technologies", "projects", "faq", "contact"];
       let current = "home";
       for (const sectionId of sections) {
         const element = document.getElementById(sectionId);

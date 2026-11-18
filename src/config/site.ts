@@ -41,6 +41,7 @@ export const siteConfig = {
     { label: "Services", href: "#services" },
     { label: "Technologies", href: "#technologies" },
     { label: "Projects", href: "#projects" },
+    { label: "FAQ", href: "#faq" },
     { label: "Contact", href: "#contact" },
   ],
 
@@ -205,6 +206,59 @@ export const siteConfig = {
       tags: ["Next.js", "Go", "PostgreSQL", "Kafka", "Azure"],
       category: "Logistics",
       link: "#",
+    },
+  ],
+
+  faqs: [
+    {
+      question: "What services does DevSyntix provide?",
+      answer:
+        "DevSyntix provides end-to-end technology solutions, including custom software development, web application development, SaaS product development, API integration, AI-powered solutions, UI/UX design, and cloud-based solutions. We help businesses transform ideas into scalable digital products.",
+    },
+    {
+      question: "Do you work with startups and early-stage businesses?",
+      answer:
+        "Absolutely! We work with startups, entrepreneurs, and established businesses. Whether you have an initial idea, need an MVP (Minimum Viable Product), or want to scale an existing application, we can help turn your vision into a functional digital solution.",
+    },
+    {
+      question: "Can you develop custom SaaS products?",
+      answer:
+        "Yes! We specialize in building custom SaaS applications tailored to your business requirements. From planning and architecture to development, deployment, and scalability, we help create secure, reliable, and user-friendly software products.",
+    },
+    {
+      question: "Do you provide website maintenance and support?",
+      answer:
+        "Yes. We can provide ongoing website maintenance, performance optimization, security updates, bug fixes, and feature enhancements to keep your digital products running smoothly and efficiently.",
+    },
+    {
+      question: "How much does software development cost?",
+      answer:
+        "The cost depends on project complexity, features, technology requirements, development time, and overall scope. We follow a project-based approach and provide customized quotations after understanding your requirements.\n\nContact us for a project estimate.",
+    },
+    {
+      question: "Do you offer ongoing technical support?",
+      answer:
+        "Yes. We offer ongoing technical assistance, troubleshooting, maintenance, updates, and performance improvements. Our goal is to ensure your application remains reliable, secure, and ready to grow with your business.",
+    },
+    {
+      question: "Which technologies does DevSyntix work with?",
+      answer:
+        "We work with modern technologies and frameworks, including React, JavaScript, .NET, ASP.NET Core, SQL Server, cloud platforms, and other tools selected according to project requirements.",
+    },
+    {
+      question: "How long does it take to complete a project?",
+      answer:
+        "Project timelines depend on the scope, complexity, and required features. A simple website may take a few weeks, while larger applications and SaaS platforms may require several months. We establish a clear development timeline before starting.",
+    },
+    {
+      question: "Can you upgrade or improve an existing website or application?",
+      answer:
+        "Yes. We can help modernize existing applications, improve performance, redesign user interfaces, integrate new features, fix technical issues, and migrate applications to modern technologies.",
+    },
+    {
+      question: "How do I get started with DevSyntix?",
+      answer:
+        "Getting started is simple! Contact us through our website with your project details. Our team will review your requirements, discuss your goals, and suggest an appropriate development approach.",
     },
   ],
 } as const;
