@@ -25,7 +25,7 @@ export default function Contact() {
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
     email: "",
-    phone: "+91 ",
+    phone: "",
     company: "",
     message: "",
   });
@@ -41,18 +41,38 @@ export default function Contact() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
+    let val = e.target.value.replace(/\D/g, "");
+    if (val.length === 12 && val.startsWith("91")) {
+      val = val.slice(2);
+    }
+    setFormData((prev) => ({ ...prev, phone: val.slice(0, 10) }));
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const digitsOnly = formData.phone.replace(/\D/g, "");
+    if (digitsOnly.length !== 10) {
+      setSubmitError("Phone number must be strictly 10 numeric digits.");
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitError(null);
 
     try {
+      const payload = {
+        ...formData,
+        phone: `+91 ${digitsOnly}`,
+      };
+
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       const text = await res.text();
@@ -185,7 +205,7 @@ export default function Contact() {
                         setFormData({
                           fullName: "",
                           email: "",
-                          phone: "+91 ",
+                          phone: "",
                           company: "",
                           message: "",
                         });
@@ -284,16 +304,24 @@ export default function Contact() {
                       >
                         Phone Number <span className="text-[#29d8ff]">*</span>
                       </label>
-                      <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        placeholder="+91 98765 43210"
-                        required
-                        className={inputClasses}
-                      />
+                      <div className="relative flex items-center">
+                        <span className="absolute left-4 text-xs font-bold text-[#29d8ff] tracking-wider select-none pointer-events-none flex items-center gap-1.5 border-r border-white/10 pr-2.5">
+                          +91
+                        </span>
+                        <input
+                          type="tel"
+                          id="phone"
+                          name="phone"
+                          inputMode="numeric"
+                          pattern="[0-9]{10}"
+                          maxLength={10}
+                          value={formData.phone}
+                          onChange={handlePhoneChange}
+                          placeholder="9876543210"
+                          required
+                          className={`${inputClasses} pl-16 tracking-wider font-mono`}
+                        />
+                      </div>
                     </div>
                   </div>
 

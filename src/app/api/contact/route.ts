@@ -21,6 +21,21 @@ export async function POST(request: Request) {
       );
     }
 
+    const rawPhoneDigits = String(phone).replace(/\D/g, "");
+    const tenDigits =
+      rawPhoneDigits.length === 12 && rawPhoneDigits.startsWith("91")
+        ? rawPhoneDigits.slice(2)
+        : rawPhoneDigits;
+
+    if (tenDigits.length !== 10) {
+      return NextResponse.json(
+        { error: "Phone number must be strictly 10 numeric digits." },
+        { status: 400 }
+      );
+    }
+
+    const formattedPhone = `+91 ${tenDigits}`;
+
     const rawApiKey = process.env.RESEND_API_KEY;
     const resendApiKey = rawApiKey
       ? rawApiKey.trim().replace(/^["']|["']$/g, "")
@@ -81,7 +96,7 @@ export async function POST(request: Request) {
           <tr>
             <td style="padding: 8px 0; color: #86868b; font-size: 13px;">Phone Number:</td>
             <td style="padding: 8px 0; color: #29d8ff; font-weight: 600; font-size: 15px;">
-              <a href="tel:${(phone || '').replace(/[^0-9+]/g, '')}" style="color: #29d8ff; text-decoration: none;">${phone}</a>
+              <a href="tel:+91${tenDigits}" style="color: #29d8ff; text-decoration: none;">${formattedPhone}</a>
             </td>
           </tr>
         </table>
@@ -112,7 +127,7 @@ export async function POST(request: Request) {
         from: senderFrom,
         to: [finalRecipient],
         reply_to: email,
-        subject: `🚀 New DevSyntix Inquiry from ${fullName} (${phone || email})`,
+        subject: `🚀 New DevSyntix Inquiry from ${fullName} (${formattedPhone})`,
         html: emailHtml,
       }),
     });
@@ -144,7 +159,7 @@ export async function POST(request: Request) {
             from: senderFrom,
             to: [finalRecipient],
             reply_to: email,
-            subject: `🚀 New DevSyntix Inquiry from ${fullName} (${phone || email})`,
+            subject: `🚀 New DevSyntix Inquiry from ${fullName} (${formattedPhone})`,
             html: emailHtml,
           }),
         });
