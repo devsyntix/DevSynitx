@@ -21,19 +21,34 @@ export async function POST(request: Request) {
       );
     }
 
-    const recipientEmail = "Devsyntix@gmail.com";
-    const resendApiKey = process.env.RESEND_API_KEY;
+    const rawApiKey = process.env.RESEND_API_KEY;
+    const resendApiKey = rawApiKey
+      ? rawApiKey.trim().replace(/^["']|["']$/g, "")
+      : null;
 
     if (!resendApiKey) {
-      console.error("RESEND_API_KEY is not defined in environment variables.");
+      console.error(
+        "[Resend] RESEND_API_KEY is missing from environment variables. If you just added it in Vercel, remember to trigger a Redeploy so Vercel can inject it into the active serverless function."
+      );
       return NextResponse.json(
         {
           error:
-            "Email service is not configured. Please ensure RESEND_API_KEY is set in Vercel environment variables.",
+            "RESEND_API_KEY is not active on this deployment. If you just added it in Vercel Project Settings, please go to Deployments > Redeploy so the new environment variable takes effect.",
         },
         { status: 500 }
       );
     }
+
+    // Default recipient is Devsyntix@gmail.com, configurable via CONTACT_TO_EMAIL
+    const recipientEmail =
+      process.env.CONTACT_TO_EMAIL?.trim() || "Devsyntix@gmail.com";
+    const senderFrom =
+      process.env.RESEND_FROM_EMAIL?.trim() ||
+      "DevSyntix <onboarding@resend.dev>";
+
+    console.log(
+      `[Resend] Preparing email delivery to ${recipientEmail} from ${senderFrom}`
+    );
 
     const emailHtml = `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; background: #0b0e14; color: #ffffff; padding: 32px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);">
@@ -85,11 +100,11 @@ export async function POST(request: Request) {
     const resendRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${resendApiKey.trim()}`,
+        Authorization: `Bearer ${resendApiKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "DevSyntix <onboarding@resend.dev>",
+        from: senderFrom,
         to: [recipientEmail],
         reply_to: email,
         subject: `🚀 New DevSyntix Inquiry from ${fullName} (${projectType || "General"})`,
@@ -98,14 +113,25 @@ export async function POST(request: Request) {
     });
 
     const resData = await resendRes.json();
+    console.log("[Resend] API response status:", resendRes.status, resData);
 
     if (!resendRes.ok) {
-      console.error("Resend API returned error:", resData);
+      console.error("[Resend] API error details:", resData);
+
+      let customMessage = resData?.message;
+      if (
+        typeof customMessage === "string" &&
+        customMessage.toLowerCase().includes("testing emails to your own email address")
+      ) {
+        customMessage =
+          "Resend Free Tier restriction: With 'onboarding@resend.dev', emails can only be sent to the email address registered with your Resend account. To deliver to Devsyntix@gmail.com, ensure your Resend account is registered under Devsyntix@gmail.com, or verify your custom domain at resend.com/domains.";
+      }
+
       return NextResponse.json(
         {
           error:
-            resData?.message ||
-            "Resend could not send the email. Please check your Resend API configuration.",
+            customMessage ||
+            "Resend could not deliver the email. Check Resend logs at resend.com/emails.",
         },
         { status: resendRes.status }
       );
@@ -113,7 +139,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true, id: resData.id });
   } catch (error: any) {
-    console.error("Contact API handler error:", error);
+    console.error("[Resend] Contact API error:", error);
     return NextResponse.json(
       { error: error?.message || "Internal server error." },
       { status: 500 }

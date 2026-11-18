@@ -172,10 +172,13 @@ export default function Contact() {
                     </h3>
                     <p className="text-[#86868b] text-sm max-w-md mx-auto leading-relaxed">
                       Thank you, <strong className="text-white">{formData.fullName}</strong>.
-                      Your project inquiry has been delivered directly to{" "}
+                      Your project inquiry has been transmitted to{" "}
                       <span className="text-[#29d8ff] font-medium">Devsyntix@gmail.com</span>.
                       Our engineering team will review your specifications and contact you shortly at{" "}
                       <span className="text-white font-medium">{formData.email}</span>.
+                    </p>
+                    <p className="text-xs text-[#86868b]/70 bg-white/[0.03] border border-white/10 rounded-xl p-3 max-w-md mx-auto">
+                      💡 <strong>Note:</strong> Automated notifications from Resend test domains may be routed to your <strong>Spam / Junk</strong> folder. Please check there if not visible in Primary.
                     </p>
                   </div>
 
