@@ -105,6 +105,9 @@ export const metadata: Metadata = {
     apple: "/brand/apple-touch-icon.png",
     shortcut: "/favicon.ico",
   },
+  verification: {
+    google: "googleb90a1c97fbd5bc51",
+  },
 };
 
 export default function RootLayout({
