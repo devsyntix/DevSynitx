@@ -84,9 +84,9 @@ function AppleStatCard({ stat, inView }: { stat: Stat; inView: boolean }) {
           <span>{inView ? count : 0}</span>
           <span className="text-[#29d8ff] text-4xl ml-0.5">{stat.suffix}</span>
         </div>
-        <h4 className="text-base font-semibold tracking-tight text-white/90 mt-2">
+        <h3 className="text-base font-semibold tracking-tight text-white/90 mt-2">
           {stat.label}
-        </h4>
+        </h3>
         <p className="text-xs text-[#86868b] leading-relaxed">
           {stat.sublabel}
         </p>
@@ -132,8 +132,9 @@ export default function About() {
       <div className="relative z-10 mx-auto max-w-6xl">
         {/* Apple Style Section Header */}
         <SectionHeading
+          tag="About DevSyntix"
           title="Technology Meets Creativity."
-          subtitle="DevSyntix is a technology-driven company focused on building innovative software solutions, scalable applications, and intelligent digital experiences that help businesses grow."
+          subtitle="DevSyntix is a premier technology enterprise specializing in custom software solutions, scalable SaaS development, and intelligent digital experiences engineered to help modern businesses grow."
         />
 
         {/* Apple Squircles Metric Grid */}

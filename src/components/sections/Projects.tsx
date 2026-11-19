@@ -59,7 +59,7 @@ export default function Projects() {
         <SectionHeading
           tag="Selected Work"
           title="Engineered to Inspire."
-          subtitle="A showcase of mission-critical platforms, enterprise applications, and scalable digital solutions delivered by DevSyntix."
+          subtitle="A showcase of mission-critical custom software development, enterprise web applications, and scalable SaaS platforms delivered by DevSyntix."
         />
 
         {/* 2-Column iOS 27 Spatial Project Cards */}

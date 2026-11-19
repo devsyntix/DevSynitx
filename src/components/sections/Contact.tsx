@@ -168,7 +168,7 @@ export default function Contact() {
         <SectionHeading
           tag="Initiate Contact"
           title="Have an Idea? Let's Build Something Amazing."
-          subtitle="Let's turn your vision into a powerful digital solution. Connect with our principal engineering team."
+          subtitle="Let's turn your vision into a powerful digital solution. Connect with our principal engineering team to discuss custom software development, SaaS architecture, or AI automation."
         />
 
         {/* Two-Column iOS 27 Layout */}

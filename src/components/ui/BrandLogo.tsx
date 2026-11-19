@@ -31,7 +31,7 @@ export default function BrandLogo({
 
         <Image
           src="/brand/logo.png"
-          alt="DevSyntix Logo"
+          alt="DevSyntix — Custom Software Development and SaaS Solutions"
           width={iconDimensions.width * 2}
           height={iconDimensions.height * 2}
           className="w-full h-full object-contain drop-shadow-[0_2px_10px_rgba(41,216,255,0.5)]"
@@ -44,7 +44,7 @@ export default function BrandLogo({
         <div className="flex items-center">
           <Image
             src="/brand/wordmark-white.png"
-            alt="DevSyntix"
+            alt="DevSyntix — Software Development & SaaS Solutions"
             width={790}
             height={101}
             style={{ height: `${iconDimensions.wordmarkHeight}px`, width: "auto" }}

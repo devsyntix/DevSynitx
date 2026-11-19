@@ -16,9 +16,9 @@ export default function Services() {
 
       <div className="mx-auto max-w-7xl">
         <SectionHeading
-          tag="Capabilities"
-          title="Our Services."
-          subtitle="Comprehensive technology solutions tailored to your business needs, engineered with Apple-grade precision."
+          tag="Engineering Capabilities"
+          title="Custom Software &amp; SaaS Solutions."
+          subtitle="Comprehensive software development, web application engineering, SaaS platform architecture, and AI automation tailored to your business needs."
         />
 
         {/* iOS 27 Squircle Service Grid */}

@@ -73,7 +73,7 @@ export default function TechStack() {
         <SectionHeading
           tag="Technology Matrix"
           title="Modern Stack. Infinite Scale."
-          subtitle="Battle-tested frameworks, cloud infrastructure, and modern toolchains powering our software solutions."
+          subtitle="Battle-tested frameworks, cloud infrastructure, and modern toolchains powering custom software development and scalable SaaS applications."
         />
 
         {/* iOS 27 Segmented Control Tab Switcher */}

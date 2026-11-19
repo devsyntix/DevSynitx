@@ -110,6 +110,9 @@ export default function Hero() {
 
         {/* Apple Headline with Precision SF Typography */}
         <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold tracking-[-0.04em] text-white leading-[1.04] max-w-4xl mx-auto">
+          <span className="sr-only">
+            DevSyntix — Custom Software Development &amp; Scalable SaaS Solutions.{" "}
+          </span>
           Building{" "}
           <span className="bg-gradient-to-r from-white via-[#f5f5f7] to-[#86868b] bg-clip-text text-transparent">
             Digital
@@ -124,9 +127,9 @@ export default function Hero() {
 
         {/* Apple Neutral Body Copy */}
         <p className="mx-auto mt-8 max-w-2xl text-lg sm:text-xl text-[#a1a1a6] leading-relaxed font-normal tracking-[-0.015em]">
-          We transform ideas into powerful digital products through innovative
-          software engineering, intelligent automation, and scalable SaaS
-          solutions.
+          DevSyntix transforms ideas into powerful digital products through custom
+          software solutions, responsive web application development, intelligent AI
+          automation, and scalable SaaS platforms.
         </p>
 
         {/* iOS 27 CTA Buttons with Apple Intelligence Aura */}

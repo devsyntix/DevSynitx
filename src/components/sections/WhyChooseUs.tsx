@@ -27,8 +27,8 @@ export default function WhyChooseUs() {
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           tag="Why DevSyntix"
-          title="Engineered for Excellence."
-          subtitle="We deliver uncompromising quality, modern architecture, and strategic digital advantages for global teams."
+          title="Engineered for Scalable Performance."
+          subtitle="We deliver uncompromising quality, modern architecture, and custom software solutions that give growing businesses a strategic digital advantage."
         />
 
         {/* Features 3-Column Squircle Grid */}
