@@ -172,40 +172,13 @@ export const siteConfig = {
 
   projects: [
     {
-      title: "NexaPay — Fintech Dashboard",
+      title: "The Grand Estate — Luxury Real Estate Platform",
       description:
-        "A comprehensive fintech dashboard with real-time analytics, transaction monitoring, and AI-powered fraud detection for a next-gen payment platform.",
-      image: "/projects/nexapay.jpg",
-      tags: ["Next.js", "TypeScript", "PostgreSQL", "Stripe", "AWS"],
-      category: "Fintech",
-      link: "#",
-    },
-    {
-      title: "MediCore — Healthcare Platform",
-      description:
-        "HIPAA-compliant telemedicine platform enabling virtual consultations, electronic health records, and intelligent appointment scheduling.",
-      image: "/projects/medicore.jpg",
-      tags: ["React", "Node.js", "MongoDB", "WebRTC", "GCP"],
-      category: "Healthcare",
-      link: "#",
-    },
-    {
-      title: "EduVerse — E-Learning Ecosystem",
-      description:
-        "An immersive e-learning platform featuring interactive courses, live sessions, progress tracking, and AI-driven personalized learning paths.",
-      image: "/projects/eduverse.jpg",
-      tags: ["Vue.js", "Python", "Redis", "Docker", "Kubernetes"],
-      category: "EdTech",
-      link: "#",
-    },
-    {
-      title: "LogiFlow — Supply Chain SaaS",
-      description:
-        "End-to-end supply chain management SaaS with real-time inventory tracking, predictive analytics, and automated logistics optimization.",
-      image: "/projects/logiflow.jpg",
-      tags: ["Next.js", "Go", "PostgreSQL", "Kafka", "Azure"],
-      category: "Logistics",
-      link: "#",
+        "A bespoke architectural showcase and digital sales platform engineered for The Grand Estate by DevSyntix Builder. Features high-performance interactive property exploration, responsive luxury typography, immersive visual galleries, and conversion-optimized lead capture for premium luxury villas in North Bangalore.",
+      image: "/projects/grand-estate.jpg",
+      tags: ["React", "Tailwind CSS", "Vite", "Luxury Real Estate", "Vercel"],
+      category: "Luxury Real Estate Platform",
+      link: "https://the-grand-estate.vercel.app/#home",
     },
   ],
 

@@ -9,40 +9,18 @@ interface Project {
   description: string;
   technologies: string[];
   gradientStyle: string;
+  link: string;
 }
 
 const projects: Project[] = [
   {
-    title: "CloudFlow SaaS Platform",
-    category: "Cloud Infrastructure",
+    title: "The Grand Estate",
+    category: "Luxury Real Estate Platform",
     description:
-      "Enterprise cloud orchestration solution with real-time telemetry, auto-scaling microservices, and unified dashboard analytics.",
-    technologies: ["React", "Node.js", "AWS", "Docker"],
-    gradientStyle: "from-[#0071e3] via-[#29d8ff] to-[#af52de]",
-  },
-  {
-    title: "FinTrack Analytics",
-    category: "Financial Intelligence",
-    description:
-      "Sub-millisecond financial analytics engine delivering predictive modeling, automated reconciliation, and executive metrics.",
-    technologies: ["Next.js", "Python", "PostgreSQL", "Tailwind"],
-    gradientStyle: "from-[#af52de] via-[#5856d6] to-[#0071e3]",
-  },
-  {
-    title: "MediConnect Health",
-    category: "Telehealth & EHR",
-    description:
-      "HIPAA-compliant healthcare platform facilitating encrypted consultations, doctor-patient workflows, and unified records.",
-    technologies: ["React Native", ".NET", "Azure", "WebRTC"],
-    gradientStyle: "from-[#29d8ff] via-[#0071e3] to-[#5856d6]",
-  },
-  {
-    title: "ShopSphere Global",
-    category: "Modern E-Commerce",
-    description:
-      "High-throughput headless commerce marketplace featuring dynamic inventory streaming, AI recommendations, and global checkout.",
-    technologies: ["Next.js", "TypeScript", "MongoDB", "Stripe"],
-    gradientStyle: "from-[#0071e3] via-[#30d158] to-[#29d8ff]",
+      "A bespoke architectural showcase and digital sales platform engineered for The Grand Estate by DevSyntix Builder. Features high-performance interactive property exploration, responsive luxury typography, immersive visual galleries, and conversion-optimized lead capture for premium luxury villas in North Bangalore.",
+    technologies: ["React", "Tailwind CSS", "Vite", "Luxury Real Estate", "Vercel"],
+    gradientStyle: "from-[#0b2b20] via-[#0071e3] to-[#29d8ff]",
+    link: "https://the-grand-estate.vercel.app/#home",
   },
 ];
 
@@ -59,53 +37,72 @@ export default function Projects() {
         <SectionHeading
           tag="Selected Work"
           title="Engineered to Inspire."
-          subtitle="A showcase of mission-critical custom software development, enterprise web applications, and scalable SaaS platforms delivered by DevSyntix."
+          subtitle="A showcase of mission-critical custom software development, enterprise web applications, and scalable digital solutions delivered by DevSyntix."
         />
 
-        {/* 2-Column iOS 27 Spatial Project Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16 sm:mt-20">
+        {/* Featured Project Showcase Card */}
+        <div className={`mt-16 sm:mt-20 ${projects.length === 1 ? "max-w-3xl mx-auto" : "grid grid-cols-1 md:grid-cols-2 gap-8"}`}>
           {projects.map((project, index) => (
-            <div
-              key={index}
-              className="ios-glass-card rounded-[32px] overflow-hidden group flex flex-col justify-between"
+            <a
+              key={project.title}
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`View live project: ${project.title}`}
+              className="ios-glass-card rounded-[32px] overflow-hidden group flex flex-col justify-between border border-white/10 hover:border-[#29d8ff]/40 transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.7)] hover:shadow-[0_25px_60px_rgba(41,216,255,0.15)] block"
             >
               {/* Spatial UI Mockup Preview with Specular Lighting */}
               <div
-                className={`relative h-64 sm:h-72 bg-gradient-to-br ${project.gradientStyle} p-8 flex flex-col justify-between overflow-hidden`}
+                className={`relative h-64 sm:h-76 bg-gradient-to-br ${project.gradientStyle} p-6 sm:p-8 flex flex-col justify-between overflow-hidden`}
               >
                 {/* Frosted grid overlay */}
                 <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:24px_24px] opacity-40" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30" />
 
                 {/* Spatial glass pill on top */}
                 <div className="relative z-10 flex items-center justify-between">
-                  <span className="px-3.5 py-1 rounded-full text-xs font-semibold tracking-tight text-white bg-black/40 backdrop-blur-xl border border-white/20">
-                    {project.category}
-                  </span>
-                  <div className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-xl border border-white/20 flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300">
+                  <div className="flex items-center gap-2">
+                    <span className="px-3.5 py-1 rounded-full text-xs font-semibold tracking-tight text-white bg-black/50 backdrop-blur-xl border border-white/20">
+                      {project.category}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold tracking-tight text-[#30d158] bg-black/50 backdrop-blur-xl border border-[#30d158]/30">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#30d158] animate-pulse" />
+                      Live Production
+                    </span>
+                  </div>
+                  <div className="w-10 h-10 rounded-full bg-black/50 backdrop-blur-xl border border-white/20 flex items-center justify-center text-white group-hover:scale-110 group-hover:border-[#29d8ff] group-hover:text-[#29d8ff] transition-all duration-300">
                     <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </div>
                 </div>
 
-                {/* Simulated Spatial App Glass Frame */}
-                <div className="relative z-10 p-4 rounded-2xl bg-white/[0.12] backdrop-blur-2xl border border-white/25 shadow-2xl max-w-xs group-hover:translate-y-[-4px] transition-transform duration-300">
+                {/* Simulated Spatial App Glass Frame with Real URL */}
+                <div className="relative z-10 p-4 rounded-2xl bg-black/40 backdrop-blur-2xl border border-white/20 shadow-2xl max-w-sm group-hover:translate-y-[-4px] transition-transform duration-300">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="w-2 h-2 rounded-full bg-[#ff453a]" />
-                    <span className="w-2 h-2 rounded-full bg-[#ffd60a]" />
-                    <span className="w-2 h-2 rounded-full bg-[#30d158]" />
-                    <span className="text-[10px] font-mono text-white/70 ml-1">
-                      {project.title} &bull; v2.0
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#ff453a]" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#ffd60a]" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#30d158]" />
+                    <span className="text-[11px] font-mono text-white/90 ml-1.5 truncate">
+                      the-grand-estate.vercel.app
                     </span>
                   </div>
-                  <div className="h-2 w-3/4 bg-white/30 rounded-full" />
+                  <div className="flex items-center justify-between text-[11px] text-[#29d8ff] font-medium pt-1">
+                    <span>Premium Villa Showcase</span>
+                    <span className="text-white/60">Bangalore</span>
+                  </div>
                 </div>
               </div>
 
               {/* Project Details */}
-              <div className="p-8">
-                <h3 className="text-2xl font-bold tracking-tight text-white mb-3 group-hover:text-[#29d8ff] transition-colors">
-                  {project.title}
-                </h3>
+              <div className="p-6 sm:p-8">
+                <div className="flex items-start justify-between gap-4 mb-3">
+                  <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white group-hover:text-[#29d8ff] transition-colors">
+                    {project.title}
+                  </h3>
+                  <span className="text-xs font-mono text-[#86868b] bg-white/[0.04] px-2.5 py-1 rounded-full border border-white/10 flex-shrink-0">
+                    0{index + 1}
+                  </span>
+                </div>
+
                 <p className="text-sm leading-relaxed text-[#86868b] mb-6">
                   {project.description}
                 </p>
@@ -124,14 +121,16 @@ export default function Projects() {
 
                 {/* View Project Button */}
                 <div className="pt-4 border-t border-white/[0.08] flex items-center justify-between">
-                  <span className="text-xs font-semibold text-[#29d8ff] flex items-center gap-1 group-hover:gap-2 transition-all">
-                    <span>Explore Architecture Case Study</span>
+                  <span className="text-xs font-semibold text-[#29d8ff] flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
+                    <span>Launch Live Website</span>
                     <ArrowUpRight className="w-4 h-4" />
                   </span>
-                  <span className="text-xs font-mono text-[#86868b]">0{index + 1} / 04</span>
+                  <span className="text-xs text-[#86868b] font-mono group-hover:text-white transition-colors">
+                    Visit Deployment &rarr;
+                  </span>
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
 
