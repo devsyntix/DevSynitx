@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { ArrowUpRight, ExternalLink } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 
@@ -10,6 +11,7 @@ interface Project {
   technologies: string[];
   gradientStyle: string;
   link: string;
+  image: string;
 }
 
 const projects: Project[] = [
@@ -21,6 +23,7 @@ const projects: Project[] = [
     technologies: ["React", "Tailwind CSS", "Vite", "Luxury Real Estate", "Vercel"],
     gradientStyle: "from-[#0b2b20] via-[#0071e3] to-[#29d8ff]",
     link: "https://the-grand-estate.vercel.app/#home",
+    image: "/projects/grand-estate.jpg",
   },
 ];
 
@@ -51,32 +54,43 @@ export default function Projects() {
               aria-label={`View live project: ${project.title}`}
               className="ios-glass-card rounded-[32px] overflow-hidden group flex flex-col justify-between border border-white/10 hover:border-[#29d8ff]/40 transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.7)] hover:shadow-[0_25px_60px_rgba(41,216,255,0.15)] block"
             >
-              {/* Spatial UI Mockup Preview with Specular Lighting */}
+              {/* Spatial UI Mockup Preview with Specular Lighting & Live Image Background */}
               <div
-                className={`relative h-64 sm:h-76 bg-gradient-to-br ${project.gradientStyle} p-6 sm:p-8 flex flex-col justify-between overflow-hidden`}
+                className="relative h-72 sm:h-80 md:h-96 p-6 sm:p-8 flex flex-col justify-between overflow-hidden bg-black"
               >
-                {/* Frosted grid overlay */}
-                <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:24px_24px] opacity-40" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30" />
+                {/* Live Website Background Image */}
+                <Image
+                  src={project.image}
+                  alt={`${project.title} live website showcase`}
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 768px"
+                  className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+
+                {/* Dark Vignette & Gradient Overlays for Readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/60 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/50 pointer-events-none" />
+                <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:24px_24px] opacity-25 pointer-events-none" />
 
                 {/* Spatial glass pill on top */}
                 <div className="relative z-10 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="px-3.5 py-1 rounded-full text-xs font-semibold tracking-tight text-white bg-black/50 backdrop-blur-xl border border-white/20">
+                    <span className="px-3.5 py-1 rounded-full text-xs font-semibold tracking-tight text-white bg-black/60 backdrop-blur-xl border border-white/20 shadow-lg">
                       {project.category}
                     </span>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold tracking-tight text-[#30d158] bg-black/50 backdrop-blur-xl border border-[#30d158]/30">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold tracking-tight text-[#30d158] bg-black/60 backdrop-blur-xl border border-[#30d158]/40 shadow-lg">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#30d158] animate-pulse" />
                       Live Production
                     </span>
                   </div>
-                  <div className="w-10 h-10 rounded-full bg-black/50 backdrop-blur-xl border border-white/20 flex items-center justify-center text-white group-hover:scale-110 group-hover:border-[#29d8ff] group-hover:text-[#29d8ff] transition-all duration-300">
+                  <div className="w-10 h-10 rounded-full bg-black/60 backdrop-blur-xl border border-white/20 flex items-center justify-center text-white group-hover:scale-110 group-hover:border-[#29d8ff] group-hover:text-[#29d8ff] transition-all duration-300 shadow-lg">
                     <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </div>
                 </div>
 
                 {/* Simulated Spatial App Glass Frame with Real URL */}
-                <div className="relative z-10 p-4 rounded-2xl bg-black/40 backdrop-blur-2xl border border-white/20 shadow-2xl max-w-sm group-hover:translate-y-[-4px] transition-transform duration-300">
+                <div className="relative z-10 p-4 rounded-2xl bg-black/60 backdrop-blur-2xl border border-white/20 shadow-2xl max-w-sm group-hover:translate-y-[-4px] transition-transform duration-300">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#ff453a]" />
                     <span className="w-2.5 h-2.5 rounded-full bg-[#ffd60a]" />
