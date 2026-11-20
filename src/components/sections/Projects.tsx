@@ -122,7 +122,7 @@ export default function Projects() {
                 </p>
 
                 {/* Tech Pills */}
-                <div className="flex flex-wrap gap-2 mb-8">
+                <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech) => (
                     <span
                       key={tech}
@@ -131,17 +131,6 @@ export default function Projects() {
                       {tech}
                     </span>
                   ))}
-                </div>
-
-                {/* View Project Button */}
-                <div className="pt-4 border-t border-white/[0.08] flex items-center justify-between">
-                  <span className="text-xs font-semibold text-[#29d8ff] flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
-                    <span>Launch Live Website</span>
-                    <ArrowUpRight className="w-4 h-4" />
-                  </span>
-                  <span className="text-xs text-[#86868b] font-mono group-hover:text-white transition-colors">
-                    Visit Deployment &rarr;
-                  </span>
                 </div>
               </div>
             </a>
