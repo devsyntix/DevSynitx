@@ -36,7 +36,36 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-::selection {
+/* ── Prevent Text Dragging & Accidental Selection ── */
+*,
+*::before,
+*::after {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+img,
+a {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+/* Re-enable text selection for form inputs and textareas */
+input,
+textarea,
+select,
+[contenteditable="true"] {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+input::selection,
+textarea::selection {
   background: rgba(41, 216, 255, 0.35);
   color: #ffffff;
 }

@@ -124,7 +124,7 @@ export default function RootLayout({
           '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", var(--font-inter), system-ui, sans-serif',
       }}
     >
-      <body className="min-h-screen bg-black text-[#f5f5f7] antialiased selection:bg-[#29d8ff]/30 selection:text-white flex flex-col font-sans">
+      <body className="min-h-screen bg-black text-[#f5f5f7] antialiased select-none flex flex-col font-sans">
         <JsonLd />
         <CustomCursor />
         <SmoothScroll>
