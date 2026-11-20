@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import SectionHeading from "@/components/ui/SectionHeading";
+import { TechIcon } from "@/components/ui/TechIcons";
 
 interface TechItem {
   name: string;
@@ -110,15 +111,16 @@ export default function TechStack() {
                 <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
 
                 <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3.5">
                     <div
-                      className="w-3.5 h-3.5 rounded-full shadow-lg"
+                      className="w-10 h-10 rounded-2xl bg-white/[0.06] border border-white/12 flex items-center justify-center p-2.5 transition-all duration-300 group-hover:scale-110 group-hover:bg-white/[0.09] group-hover:border-white/25 shadow-[0_4px_12px_rgba(0,0,0,0.5)] flex-shrink-0"
                       style={{
-                        backgroundColor: tech.color,
-                        boxShadow: `0 0 12px ${tech.color}60`,
+                        boxShadow: `0 0 20px ${tech.color}18`,
                       }}
-                    />
-                    <span className="text-base font-semibold tracking-tight text-white">
+                    >
+                      <TechIcon name={tech.name} className="w-5 h-5 transition-transform duration-300" />
+                    </div>
+                    <span className="text-base font-semibold tracking-tight text-white group-hover:text-[#29d8ff] transition-colors">
                       {tech.name}
                     </span>
                   </div>
@@ -145,9 +147,10 @@ export default function TechStack() {
             ].map((tech) => (
               <span
                 key={tech}
-                className="px-4 py-1.5 rounded-full text-xs font-medium text-white/80 bg-white/[0.04] border border-white/10 backdrop-blur-xl hover:border-white/25 transition-all"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium text-white/80 bg-white/[0.04] border border-white/10 backdrop-blur-xl hover:border-white/25 transition-all"
               >
-                {tech}
+                <TechIcon name={tech === ".NET" ? ".NET Core" : tech === "CI/CD" ? "CI/CD Pipelines" : tech} className="w-3.5 h-3.5" />
+                <span>{tech}</span>
               </span>
             ))}
           </div>
