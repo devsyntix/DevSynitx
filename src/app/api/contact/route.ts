@@ -48,6 +48,18 @@ async function resolveEnv(key: string): Promise<string | undefined> {
     if (val) return val;
   }
 
+  // 4. Built-in cloudflare:workers runtime module
+  try {
+    // @ts-ignore
+    const cfWorkers = await import("cloudflare:workers");
+    if (cfWorkers?.env) {
+      const val = findInObject(cfWorkers.env, key);
+      if (val) return val;
+    }
+  } catch {
+    // Not running on workerd or module not available
+  }
+
   return undefined;
 }
 
@@ -61,6 +73,13 @@ async function getAvailableKeyNames(): Promise<string[]> {
     const cf = await getCloudflareContext({ async: true });
     if (cf?.env) {
       Object.keys(cf.env).forEach((k) => keys.add(k));
+    }
+  } catch {}
+  try {
+    // @ts-ignore
+    const cfWorkers = await import("cloudflare:workers");
+    if (cfWorkers?.env) {
+      Object.keys(cfWorkers.env).forEach((k) => keys.add(k));
     }
   } catch {}
   return Array.from(keys);
