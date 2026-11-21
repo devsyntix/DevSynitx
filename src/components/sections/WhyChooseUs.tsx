@@ -40,7 +40,7 @@ export default function WhyChooseUs() {
             return (
               <div
                 key={index}
-                className="ios-glass-card relative flex flex-col justify-between p-3 sm:p-6 lg:p-8 rounded-xl sm:rounded-[28px] overflow-hidden group"
+                className="ios-glass-card relative flex flex-col p-3.5 sm:p-6 lg:p-8 rounded-xl sm:rounded-[28px] overflow-hidden group"
               >
                 {/* Top specular highlight */}
                 <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
@@ -65,13 +65,6 @@ export default function WhyChooseUs() {
                   <p className="text-[10px] sm:text-sm leading-tight sm:leading-relaxed text-[#86868b] line-clamp-2 sm:line-clamp-none">
                     {item.description}
                   </p>
-                </div>
-
-                <div className="mt-2.5 sm:mt-6 pt-2 sm:pt-4 border-t border-white/[0.06] flex items-center gap-1.5 sm:gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#29d8ff]" />
-                  <span className="text-[9px] sm:text-[11px] font-semibold tracking-tight text-white/50">
-                    Production Proven
-                  </span>
                 </div>
               </div>
             );
