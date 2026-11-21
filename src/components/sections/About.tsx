@@ -75,19 +75,19 @@ function AppleStatCard({ stat, inView }: { stat: Stat; inView: boolean }) {
   const count = useCountUp(stat.numericEnd, 1800, inView);
 
   return (
-    <div className="ios-glass-card p-3.5 sm:p-6 lg:p-8 rounded-2xl sm:rounded-[28px] relative overflow-hidden group">
+    <div className="ios-glass-card p-8 rounded-[28px] relative overflow-hidden group">
       {/* Specular top corner highlight */}
       <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
       
-      <div className="flex flex-col gap-1 sm:gap-2">
-        <div className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white flex items-baseline">
+      <div className="flex flex-col gap-2">
+        <div className="text-5xl sm:text-6xl font-bold tracking-tight text-white flex items-baseline">
           <span>{inView ? count : 0}</span>
-          <span className="text-[#29d8ff] text-xl sm:text-4xl ml-0.5">{stat.suffix}</span>
+          <span className="text-[#29d8ff] text-4xl ml-0.5">{stat.suffix}</span>
         </div>
-        <h3 className="text-xs sm:text-base font-semibold tracking-tight text-white/90 mt-1 sm:mt-2 leading-snug">
+        <h3 className="text-base font-semibold tracking-tight text-white/90 mt-2">
           {stat.label}
         </h3>
-        <p className="text-[10px] sm:text-xs text-[#86868b] leading-tight sm:leading-relaxed line-clamp-1 sm:line-clamp-none">
+        <p className="text-xs text-[#86868b] leading-relaxed">
           {stat.sublabel}
         </p>
       </div>
@@ -110,7 +110,7 @@ export default function About() {
           observer.disconnect();
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.2 }
     );
 
     observer.observe(el);
@@ -121,12 +121,12 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="relative overflow-hidden bg-black px-3.5 sm:px-6 py-10 sm:py-20 md:py-32"
+      className="relative overflow-hidden bg-black py-28 md:py-36 px-6"
     >
       {/* Ambient background glow */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-10 -translate-x-1/2 h-[350px] sm:h-[500px] w-[350px] sm:w-[500px] rounded-full bg-[#af52de]/10 blur-[100px] sm:blur-[150px]"
+        className="pointer-events-none absolute left-1/2 top-10 -translate-x-1/2 h-[500px] w-[500px] rounded-full bg-[#af52de]/10 blur-[150px]"
       />
 
       <div className="relative z-10 mx-auto max-w-6xl">
@@ -137,8 +137,8 @@ export default function About() {
           subtitle="DevSyntix is a premier technology enterprise specializing in custom software solutions, scalable SaaS development, and intelligent digital experiences engineered to help modern businesses grow."
         />
 
-        {/* Compact 2-column on mobile Apple Squircles Metric Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-5 lg:gap-6 mt-6 sm:mt-12 lg:mt-16">
+        {/* Apple Squircles Metric Grid */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mt-16 sm:mt-20">
           {stats.map((stat) => (
             <AppleStatCard key={stat.label} stat={stat} inView={inView} />
           ))}

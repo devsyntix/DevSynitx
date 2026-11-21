@@ -25,7 +25,6 @@ export const siteConfig = {
   contact: {
     email: "info@devsyntix.com",
     phone: "+91 70665 44055",
-    location: "Global Digital Engineering",
   },
 
   social: {

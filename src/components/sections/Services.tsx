@@ -7,7 +7,7 @@ import { ArrowUpRight } from "lucide-react";
 
 export default function Services() {
   return (
-    <section id="services" className="relative overflow-hidden bg-black px-3.5 sm:px-6 py-10 sm:py-20 md:py-32">
+    <section id="services" className="relative overflow-hidden bg-black px-3.5 sm:px-6 py-12 sm:py-24 md:py-36">
       {/* Ambient background glow */}
       <div
         aria-hidden="true"
@@ -18,11 +18,11 @@ export default function Services() {
         <SectionHeading
           tag="Engineering Capabilities"
           title="Custom Software &amp; SaaS Solutions."
-          subtitle="Enterprise-grade software engineering, web applications, SaaS platform architecture, and AI automation tailored to your business."
+          subtitle="Comprehensive software development, web application engineering, SaaS platform architecture, and AI automation tailored to your business needs."
         />
 
-        {/* Compact iOS 27 Squircle Service Grid */}
-        <div className="grid grid-cols-1 min-[480px]:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-5 lg:gap-6 mt-6 sm:mt-12 lg:mt-16">
+        {/* iOS 27 Squircle Service Grid - Compact on Mobile */}
+        <div className="grid grid-cols-1 min-[480px]:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-5 lg:gap-6 mt-6 sm:mt-12 lg:mt-20">
           {siteConfig.services.map((service, index) => {
             const Icon = service.icon;
 
@@ -31,12 +31,12 @@ export default function Services() {
                 key={index}
                 className="ios-glass-card relative flex flex-col justify-between p-4 sm:p-6 lg:p-7 rounded-2xl sm:rounded-[28px] overflow-hidden group cursor-pointer"
               >
-                {/* Specular top highlight */}
+                {/* Specular top corner highlight */}
                 <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
 
                 <div>
                   {/* Top row: Icon capsule + Apple arrow */}
-                  <div className="flex items-center justify-between mb-2.5 sm:mb-5">
+                  <div className="flex items-center justify-between mb-2.5 sm:mb-6">
                     <div className="flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-xl sm:rounded-2xl bg-white/[0.08] border border-white/15 text-[#29d8ff] shadow-inner group-hover:scale-105 transition-transform duration-300">
                       <Icon className="h-4.5 w-4.5 sm:h-6 sm:w-6" strokeWidth={1.75} />
                     </div>
@@ -47,7 +47,7 @@ export default function Services() {
                   </div>
 
                   {/* Service Title */}
-                  <h3 className="text-[15px] sm:text-lg font-semibold tracking-tight text-white mb-1 sm:mb-2 group-hover:text-[#29d8ff] transition-colors leading-snug">
+                  <h3 className="text-[15px] sm:text-lg font-semibold tracking-tight text-white mb-1 sm:mb-2.5 group-hover:text-[#29d8ff] transition-colors leading-snug">
                     {service.title}
                   </h3>
 
@@ -58,7 +58,7 @@ export default function Services() {
                 </div>
 
                 {/* Bottom status badge */}
-                <div className="mt-2.5 sm:mt-5 pt-2 sm:pt-3.5 border-t border-white/[0.06] flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-[#86868b]">
+                <div className="mt-2.5 sm:mt-6 pt-2 sm:pt-4 border-t border-white/[0.06] flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-[#86868b]">
                   <span>0{index + 1} &bull; Enterprise</span>
                   <span className="w-1.5 h-1.5 rounded-full bg-[#30d158]/80" />
                 </div>
