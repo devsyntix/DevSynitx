@@ -1,5 +1,40 @@
 import { NextResponse } from "next/server";
 
+async function resolveEnv(key: string): Promise<string | undefined> {
+  // 1. Check process.env (Node / Vercel / workerd populated)
+  if (process.env[key]) {
+    return process.env[key];
+  }
+
+  // 2. Check Cloudflare Worker bindings & secrets via @opennextjs/cloudflare
+  try {
+    const { getCloudflareContext } = await import("@opennextjs/cloudflare");
+    const cf = await getCloudflareContext({ async: true });
+    if (cf?.env && (cf.env as Record<string, any>)[key]) {
+      return (cf.env as Record<string, any>)[key];
+    }
+  } catch {
+    // Fall back if context not ready or not on Cloudflare
+  }
+
+  try {
+    const { getCloudflareContext } = await import("@opennextjs/cloudflare");
+    const cfSync = getCloudflareContext();
+    if (cfSync?.env && (cfSync.env as Record<string, any>)[key]) {
+      return (cfSync.env as Record<string, any>)[key];
+    }
+  } catch {
+    // Ignore
+  }
+
+  // 3. Check globalThis scope
+  if (typeof globalThis !== "undefined" && (globalThis as Record<string, any>)[key]) {
+    return (globalThis as Record<string, any>)[key];
+  }
+
+  return undefined;
+}
+
 export async function POST(request: Request) {
   try {
     let body;
@@ -36,31 +71,33 @@ export async function POST(request: Request) {
 
     const formattedPhone = `+91 ${tenDigits}`;
 
-    const rawApiKey = process.env.RESEND_API_KEY;
+    const rawApiKey = (await resolveEnv("RESEND_API_KEY")) || process.env.RESEND_API_KEY;
     const resendApiKey = rawApiKey
-      ? rawApiKey.trim().replace(/^["']|["']$/g, "")
+      ? String(rawApiKey).trim().replace(/^["']|["']$/g, "")
       : null;
 
     if (!resendApiKey) {
       console.error(
-        "[Resend] RESEND_API_KEY is missing from environment variables. Please add it to your Cloudflare Worker Settings > Variables and Secrets."
+        "[Resend] RESEND_API_KEY is missing from environment variables and Cloudflare context."
       );
       return NextResponse.json(
         {
           error:
-            "RESEND_API_KEY is not configured on this deployment. Please add RESEND_API_KEY to your Cloudflare Worker under Settings > Variables and Secrets.",
+            "RESEND_API_KEY is not configured on this deployment. Please verify RESEND_API_KEY is added under Worker Settings > Variables and Secrets and deployed.",
         },
         { status: 500 }
       );
     }
 
     // Default recipient is devsyntix@gmail.com, configurable via CONTACT_TO_EMAIL
+    const configuredToEmail = await resolveEnv("CONTACT_TO_EMAIL");
     let finalRecipient = (
-      process.env.CONTACT_TO_EMAIL?.trim() || "devsyntix@gmail.com"
+      configuredToEmail?.trim() || "devsyntix@gmail.com"
     ).toLowerCase();
 
+    const configuredFromEmail = await resolveEnv("RESEND_FROM_EMAIL");
     const senderFrom =
-      process.env.RESEND_FROM_EMAIL?.trim() ||
+      configuredFromEmail?.trim() ||
       "DevSyntix <onboarding@resend.dev>";
 
     console.log(
