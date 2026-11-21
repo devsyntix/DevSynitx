@@ -142,17 +142,20 @@ export async function POST(request: Request) {
 
     // Default recipient is info@devsyntix.com, configurable via CONTACT_TO_EMAIL
     const configuredToEmail = await resolveEnv("CONTACT_TO_EMAIL");
-    let finalRecipient = (
+    let targetRecipient = (
       configuredToEmail?.trim() || "info@devsyntix.com"
     ).toLowerCase();
 
     const configuredFromEmail = await resolveEnv("RESEND_FROM_EMAIL");
-    const senderFrom =
-      configuredFromEmail?.trim() ||
-      "DevSyntix <onboarding@resend.dev>";
-
-    console.log(
-      `[Resend] Preparing email delivery to ${finalRecipient} from ${senderFrom}`
+    const senderCandidates: string[] = Array.from(
+      new Set(
+        [
+          configuredFromEmail?.trim(),
+          "DevSyntix <info@devsyntix.com>",
+          "DevSyntix <contact@devsyntix.com>",
+          "DevSyntix <onboarding@resend.dev>",
+        ].filter(Boolean) as string[]
+      )
     );
 
     const emailHtml = `
@@ -204,75 +207,95 @@ export async function POST(request: Request) {
       </div>
     `;
 
-    // Attempt delivery to the intended recipient
-    let resendRes = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${resendApiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: senderFrom,
-        to: [finalRecipient],
-        reply_to: email,
-        subject: `🚀 New DevSyntix Inquiry from ${fullName} (${formattedPhone})`,
-        html: emailHtml,
-      }),
-    });
+    let resData: any = null;
+    let deliveredRecipient = targetRecipient;
+    let success = false;
+    let lastErrorMsg = "";
 
-    let resData = await resendRes.json();
-    console.log("[Resend] Initial API response:", resendRes.status, resData);
-
-    // If Resend rejects due to sandbox restriction:
-    // e.g. "You can only send testing emails to your own email address (owner@domain.com)..."
-    // Automatically catch the authorized account owner email from the error message and retry!
-    if (!resendRes.ok && typeof resData?.message === "string") {
-      const emailMatch = resData.message.match(
-        /\(([^@\s]+@[^@\s]+\.[^@\s]+)\)/
+    // Iterate through senders (info@devsyntix.com first for custom domain, onboarding@resend.dev as fallback)
+    for (const sender of senderCandidates) {
+      console.log(
+        `[Resend] Attempting email delivery to ${deliveredRecipient} from ${sender}`
       );
-      if (emailMatch && emailMatch[1]) {
-        const allowedEmail = emailMatch[1].trim().toLowerCase();
-        console.log(
-          `[Resend] Free tier restriction detected. Auto-recovering by delivering to account owner email: ${allowedEmail}`
+
+      const resendRes = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${resendApiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: sender,
+          to: [deliveredRecipient],
+          reply_to: email,
+          subject: `🚀 New DevSyntix Inquiry from ${fullName} (${formattedPhone})`,
+          html: emailHtml,
+        }),
+      });
+
+      resData = await resendRes.json();
+      console.log(`[Resend] Attempt with from="${sender}":`, resendRes.status, resData);
+
+      if (resendRes.ok) {
+        success = true;
+        break;
+      }
+
+      lastErrorMsg = resData?.message || "Delivery failed";
+
+      // If testing sandbox restriction (can only send to verified account owner)
+      if (typeof resData?.message === "string") {
+        const emailMatch = resData.message.match(
+          /\(([^@\s]+@[^@\s]+\.[^@\s]+)\)/
         );
-        finalRecipient = allowedEmail;
+        if (emailMatch && emailMatch[1]) {
+          const allowedEmail = emailMatch[1].trim().toLowerCase();
+          console.log(
+            `[Resend] Retrying delivery to sandbox authorized owner: ${allowedEmail}`
+          );
+          deliveredRecipient = allowedEmail;
 
-        resendRes = await fetch("https://api.resend.com/emails", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${resendApiKey}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            from: senderFrom,
-            to: [finalRecipient],
-            reply_to: email,
-            subject: `🚀 New DevSyntix Inquiry from ${fullName} (${formattedPhone})`,
-            html: emailHtml,
-          }),
-        });
+          const retryRes = await fetch("https://api.resend.com/emails", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${resendApiKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              from: sender,
+              to: [deliveredRecipient],
+              reply_to: email,
+              subject: `🚀 New DevSyntix Inquiry from ${fullName} (${formattedPhone})`,
+              html: emailHtml,
+            }),
+          });
 
-        resData = await resendRes.json();
-        console.log("[Resend] Retry response:", resendRes.status, resData);
+          const retryData = await retryRes.json();
+          if (retryRes.ok) {
+            resData = retryData;
+            success = true;
+            break;
+          }
+        }
       }
     }
 
-    if (!resendRes.ok) {
-      console.error("[Resend] Final API error details:", resData);
+    if (!success) {
+      console.error("[Resend] Final delivery error:", resData);
       return NextResponse.json(
         {
           error:
-            resData?.message ||
-            "Resend could not deliver the email. Please verify your Resend configuration.",
+            lastErrorMsg ||
+            "Resend could not deliver the email. Please check your domain verification in Resend.",
         },
-        { status: resendRes.status }
+        { status: 500 }
       );
     }
 
     return NextResponse.json({
       success: true,
-      id: resData.id,
-      deliveredTo: finalRecipient,
+      id: resData?.id,
+      deliveredTo: deliveredRecipient,
     });
   } catch (error: any) {
     console.error("[Resend] Contact API error:", error);
