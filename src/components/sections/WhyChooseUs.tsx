@@ -13,15 +13,15 @@ const counterStats = [
 
 export default function WhyChooseUs() {
   return (
-    <section id="why-us" className="relative overflow-hidden bg-black px-6 py-28 md:py-36">
+    <section id="why-us" className="relative overflow-hidden bg-black px-3.5 sm:px-6 py-10 sm:py-20 md:py-32">
       {/* Background radial aura */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-40 top-20 -z-10 h-[500px] w-[500px] rounded-full bg-[#af52de]/10 blur-[150px]"
+        className="pointer-events-none absolute -left-40 top-20 -z-10 h-[350px] sm:h-[500px] w-[350px] sm:w-[500px] rounded-full bg-[#af52de]/10 blur-[120px] sm:blur-[150px]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-40 bottom-20 -z-10 h-[500px] w-[500px] rounded-full bg-[#0071e3]/10 blur-[150px]"
+        className="pointer-events-none absolute -right-40 bottom-20 -z-10 h-[350px] sm:h-[500px] w-[350px] sm:w-[500px] rounded-full bg-[#0071e3]/10 blur-[120px] sm:blur-[150px]"
       />
 
       <div className="mx-auto max-w-7xl">
@@ -32,7 +32,7 @@ export default function WhyChooseUs() {
         />
 
         {/* Features 3-Column Squircle Grid */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 mt-16 sm:mt-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-5 lg:gap-6 mt-6 sm:mt-12 lg:mt-16">
           {siteConfig.whyChooseUs.map((item, index) => {
             const Icon = item.icon;
             const number = String(index + 1).padStart(2, "0");
@@ -40,36 +40,36 @@ export default function WhyChooseUs() {
             return (
               <div
                 key={index}
-                className="ios-glass-card relative flex flex-col justify-between p-8 rounded-[28px] overflow-hidden group"
+                className="ios-glass-card relative flex flex-col justify-between p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-[28px] overflow-hidden group"
               >
                 {/* Top specular highlight */}
                 <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
                 <div>
                   {/* Number & Icon Header */}
-                  <div className="flex items-center justify-between mb-6">
-                    <span className="text-xs font-mono font-bold tracking-widest text-[#86868b] bg-white/[0.05] px-3 py-1 rounded-full border border-white/10">
+                  <div className="flex items-center justify-between mb-3 sm:mb-6">
+                    <span className="text-[10px] sm:text-xs font-mono font-bold tracking-widest text-[#86868b] bg-white/[0.05] px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-white/10">
                       {number}
                     </span>
-                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/[0.06] border border-white/15 text-[#af52de] shadow-inner group-hover:scale-105 transition-transform">
-                      <Icon className="h-5 w-5" strokeWidth={1.75} />
+                    <div className="flex h-8 w-8 sm:h-11 sm:w-11 items-center justify-center rounded-xl sm:rounded-2xl bg-white/[0.06] border border-white/15 text-[#af52de] shadow-inner group-hover:scale-105 transition-transform">
+                      <Icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.75} />
                     </div>
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl font-semibold tracking-tight text-white mb-2.5">
+                  <h3 className="text-base sm:text-xl font-semibold tracking-tight text-white mb-1 sm:mb-2.5">
                     {item.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-sm leading-relaxed text-[#86868b]">
+                  <p className="text-xs sm:text-sm leading-snug sm:leading-relaxed text-[#86868b] line-clamp-2 sm:line-clamp-none">
                     {item.description}
                   </p>
                 </div>
 
-                <div className="mt-8 pt-4 border-t border-white/[0.06] flex items-center gap-2">
+                <div className="mt-3 sm:mt-8 pt-2 sm:pt-4 border-t border-white/[0.06] flex items-center gap-1.5 sm:gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#29d8ff]" />
-                  <span className="text-[11px] font-semibold tracking-tight text-white/50">
+                  <span className="text-[10px] sm:text-[11px] font-semibold tracking-tight text-white/50">
                     Production Proven
                   </span>
                 </div>
@@ -79,17 +79,17 @@ export default function WhyChooseUs() {
         </div>
 
         {/* Apple iOS 27 Control Center Widget Metrics Bar */}
-        <div className="mt-16 sm:mt-20 p-2 rounded-[32px] ios-glass border border-white/15">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <div className="mt-8 sm:mt-16 sm:mt-20 p-1.5 sm:p-2 rounded-2xl sm:rounded-[32px] ios-glass border border-white/15">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2">
             {counterStats.map((stat, index) => (
               <div
                 key={index}
-                className="p-6 rounded-[24px] bg-white/[0.03] hover:bg-white/[0.06] transition-colors text-center"
+                className="p-3 sm:p-6 rounded-xl sm:rounded-[24px] bg-white/[0.03] hover:bg-white/[0.06] transition-colors text-center"
               >
-                <div className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+                <div className="text-xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white">
                   {stat.value}
                 </div>
-                <div className="text-xs font-semibold tracking-tight text-[#86868b] mt-1">
+                <div className="text-[10px] sm:text-xs font-semibold tracking-tight text-[#86868b] mt-0.5 sm:mt-1">
                   {stat.label}
                 </div>
               </div>
