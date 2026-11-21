@@ -43,12 +43,12 @@ export async function POST(request: Request) {
 
     if (!resendApiKey) {
       console.error(
-        "[Resend] RESEND_API_KEY is missing from environment variables. If you just added it in Vercel, remember to trigger a Redeploy so Vercel can inject it into the active serverless function."
+        "[Resend] RESEND_API_KEY is missing from environment variables. Please add it to your Cloudflare Worker Settings > Variables and Secrets."
       );
       return NextResponse.json(
         {
           error:
-            "RESEND_API_KEY is not active on this deployment. If you just added it in Vercel Project Settings, please go to Deployments > Redeploy so the new environment variable takes effect.",
+            "RESEND_API_KEY is not configured on this deployment. Please add RESEND_API_KEY to your Cloudflare Worker under Settings > Variables and Secrets.",
         },
         { status: 500 }
       );
