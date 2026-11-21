@@ -140,10 +140,10 @@ export async function POST(request: Request) {
       );
     }
 
-    // Default recipient is devsyntix@gmail.com, configurable via CONTACT_TO_EMAIL
+    // Default recipient is info@devsyntix.com, configurable via CONTACT_TO_EMAIL
     const configuredToEmail = await resolveEnv("CONTACT_TO_EMAIL");
     let finalRecipient = (
-      configuredToEmail?.trim() || "devsyntix@gmail.com"
+      configuredToEmail?.trim() || "info@devsyntix.com"
     ).toLowerCase();
 
     const configuredFromEmail = await resolveEnv("RESEND_FROM_EMAIL");

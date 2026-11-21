@@ -20,10 +20,10 @@ export const siteConfig = {
   tagline: "Building Digital Experiences. Engineering Tomorrow.",
   description:
     "We craft premium digital solutions that transform ideas into powerful, scalable, and beautifully designed software products. From concept to deployment, we engineer the future.",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://dev-synitx.vercel.app",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://devsyntix.com",
 
   contact: {
-    email: "Devsyntix@gmail.com",
+    email: "info@devsyntix.com",
     phone: "+91 70665 44055",
   },
 

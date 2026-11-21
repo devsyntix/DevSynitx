@@ -32,7 +32,7 @@ export default function Contact() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [deliveredTo, setDeliveredTo] = useState<string>("Devsyntix@gmail.com");
+  const [deliveredTo, setDeliveredTo] = useState<string>("info@devsyntix.com");
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleChange = (
