@@ -1,38 +1,69 @@
 import { NextResponse } from "next/server";
 
+function findInObject(obj: any, target: string): string | undefined {
+  if (!obj || typeof obj !== "object") return undefined;
+  const targetLower = target.trim().toLowerCase();
+  for (const [k, v] of Object.entries(obj)) {
+    if (k.trim().toLowerCase() === targetLower && v !== undefined && v !== null) {
+      const strVal = String(v).trim().replace(/^["']|["']$/g, "");
+      if (strVal) return strVal;
+    }
+  }
+  return undefined;
+}
+
 async function resolveEnv(key: string): Promise<string | undefined> {
-  // 1. Check process.env (Node / Vercel / workerd populated)
-  if (process.env[key]) {
-    return process.env[key];
+  // 1. Direct process.env check
+  if (typeof process !== "undefined" && process.env) {
+    const val = findInObject(process.env, key);
+    if (val) return val;
   }
 
-  // 2. Check Cloudflare Worker bindings & secrets via @opennextjs/cloudflare
+  // 2. Cloudflare Worker bindings & secrets via @opennextjs/cloudflare
   try {
     const { getCloudflareContext } = await import("@opennextjs/cloudflare");
     const cf = await getCloudflareContext({ async: true });
-    if (cf?.env && (cf.env as Record<string, any>)[key]) {
-      return (cf.env as Record<string, any>)[key];
+    if (cf?.env) {
+      const val = findInObject(cf.env, key);
+      if (val) return val;
     }
   } catch {
-    // Fall back if context not ready or not on Cloudflare
+    // Fall back if async context not ready
   }
 
   try {
     const { getCloudflareContext } = await import("@opennextjs/cloudflare");
     const cfSync = getCloudflareContext();
-    if (cfSync?.env && (cfSync.env as Record<string, any>)[key]) {
-      return (cfSync.env as Record<string, any>)[key];
+    if (cfSync?.env) {
+      const val = findInObject(cfSync.env, key);
+      if (val) return val;
     }
   } catch {
     // Ignore
   }
 
-  // 3. Check globalThis scope
-  if (typeof globalThis !== "undefined" && (globalThis as Record<string, any>)[key]) {
-    return (globalThis as Record<string, any>)[key];
+  // 3. Global scope check
+  if (typeof globalThis !== "undefined") {
+    const val = findInObject(globalThis, key);
+    if (val) return val;
   }
 
   return undefined;
+}
+
+async function getAvailableKeyNames(): Promise<string[]> {
+  const keys = new Set<string>();
+  if (typeof process !== "undefined" && process.env) {
+    Object.keys(process.env).forEach((k) => keys.add(k));
+  }
+  try {
+    const { getCloudflareContext } = await import("@opennextjs/cloudflare");
+    const cf = await getCloudflareContext({ async: true });
+    if (cf?.env) {
+      Object.keys(cf.env).forEach((k) => keys.add(k));
+    }
+  } catch {}
+  return Array.from(keys);
 }
 
 export async function POST(request: Request) {
@@ -77,13 +108,14 @@ export async function POST(request: Request) {
       : null;
 
     if (!resendApiKey) {
+      const keys = await getAvailableKeyNames();
       console.error(
-        "[Resend] RESEND_API_KEY is missing from environment variables and Cloudflare context."
+        "[Resend] RESEND_API_KEY is missing. Detected environment keys:",
+        keys
       );
       return NextResponse.json(
         {
-          error:
-            "RESEND_API_KEY is not configured on this deployment. Please verify RESEND_API_KEY is added under Worker Settings > Variables and Secrets and deployed.",
+          error: `RESEND_API_KEY was not found in Cloudflare Worker environment. Detected keys: [${keys.join(", ") || "none"}]. Please re-add RESEND_API_KEY in Cloudflare Worker Settings > Variables and Secrets and click Deploy.`,
         },
         { status: 500 }
       );
